@@ -22,7 +22,18 @@ client.on('messageCreate', async (message) => {
     if (message.content == "hello") {
         message.reply(":wave:")
     }
-   
+});
+
+client.on('interactionCreate', (interaction) => {
+    if (!interaction.isChatInputCommand()) return;
+  
+    if (interaction.commandName === 'hey') {
+      return interaction.reply('hey!');
+    }
+  
+    if (interaction.commandName === 'ping') {
+      return interaction.reply('Pong!');
+    }
 });
 
 client.login(process.env.token);
