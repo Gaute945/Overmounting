@@ -10,6 +10,14 @@ const commands = [
     name: "ping",
     description: "Pong!",
   },
+  {
+    name: "weather",
+    description: "Current temp and wind for stord",
+  },
+  {
+    name: "coinflip",
+    description: "flips a coins",
+  },
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.token);
