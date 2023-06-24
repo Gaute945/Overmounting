@@ -19,8 +19,6 @@ client.on("messageCreate", async (message) => {
     return;
   }
 
-
-  
   if (message.content == "hello") {
     message.reply(":wave:");
   }

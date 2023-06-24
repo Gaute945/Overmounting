@@ -18,6 +18,10 @@ const commands = [
     name: "coinflip",
     description: "flips a coins",
   },
+  {
+    name: "randomnum",
+    description: "randomnum with options",
+  },
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.token);
