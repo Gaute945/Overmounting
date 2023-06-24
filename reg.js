@@ -19,8 +19,24 @@ const commands = [
     description: "flips a coins",
   },
   {
-    name: "randomnum",
-    description: "randomnum with options",
+    name: "randomnumber100",
+    description: "random nummber 1-100",
+  },
+  {
+    name: "randomnumber50",
+    description: "random nummber 1-50",
+  },
+  {
+    name: "randomnumber25",
+    description: "random nummber 1-25",
+  },
+  {
+    name: "randomnumber10",
+    description: "random nummber 1-10",
+  },
+  {
+    name: "randomnumber5",
+    description: "random nummber 1-5",
   },
 ];
 
