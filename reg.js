@@ -38,6 +38,10 @@ const commands = [
     name: "randomnumber5",
     description: "random nummber 1-5",
   },
+  {
+    name: "randomnumber1000",
+    description: "random nummber 1-1000",
+  },
 ];
 
 const rest = new REST({ version: "10" }).setToken(process.env.token);

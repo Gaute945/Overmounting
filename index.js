@@ -1,4 +1,5 @@
 require("dotenv").config();
+require("axios")
 const { Client, IntentsBitField } = require("discord.js");
 const { stringify } = require("nodemon/lib/utils");
 const client = new Client({
@@ -25,7 +26,7 @@ client.on("messageCreate", async (message) => {
   }
 });
 
-client.on("interactionCreate", (interaction) => {
+client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   if (interaction.commandName === "hey") {
@@ -37,21 +38,22 @@ client.on("interactionCreate", (interaction) => {
   }
 
   if (interaction.commandName === "weather") {
-    var weatherInfo = "18.7C";
-    return interaction.reply(weatherInfo);
-  }
-
-  if (interaction.commandName === "randomnum") {
-    function getRandomNumber(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    const axios = require("axios");
+  
+    async function getWeather() {
+      const response = await axios.get(
+        "https://api.open-meteo.com/v1/forecast?latitude=59.92&longitude=5.45&hourly=temperature_2m,precipitation_probability,precipitation&current_weather=true&forecast_days=1&timezone=auto"
+      );
+      const json = response.data;
+      var temperature = json.current_weather.temperature;
+      temperature += 4.5;
+      return temperature.toString();
     }
-
-    var maximumLimit = 100; // Set the maximum limit
-    var randomNumber = getRandomNumber(1, Math.min(maximumLimit, 1000));
-
-    return interaction.reply();
+  
+    weather = await getWeather();
+    return interaction.reply(weather);
   }
-
+  
   if (interaction.commandName === "coinflip") {
     function getCoin() {
       return Math.floor(Math.random() * 2) + 1;
@@ -105,6 +107,14 @@ client.on("interactionCreate", (interaction) => {
     }
     var randomNumberString5 = getRandomNumber5();
     return interaction.reply(randomNumberString5);
+  }
+  if (interaction.commandName === "randomnumber1000") {
+    function getRandomNumber1000() {
+      var randomNumber1000 = Math.floor(Math.random() * 1000) + 1;
+      return randomNumber1000.toString();
+    }
+    var randomNumberString1000 = getRandomNumber1000();
+    return interaction.reply(randomNumberString1000);
   }
 });
 
