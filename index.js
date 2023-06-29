@@ -51,7 +51,7 @@ client.on("interactionCreate", async (interaction) => {
     }
   
     weather = await getWeather();
-    return interaction.reply(weather);
+    return interaction.reply(weather + " " + "°C");
   }
   
   if (interaction.commandName === "coinflip") {
