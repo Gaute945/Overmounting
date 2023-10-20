@@ -21,7 +21,6 @@ client.on('guildCreate', async (guild) => {
   })
 
 client.on("messageCreate", async (message) => {
-  console.log(message.author.username + ": " + message.content);
   if (message.author.bot) {
     return;
   }
@@ -39,7 +38,7 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.commandName === "ping") {
-    return interaction.reply("Pong!");
+    return interaction.reply("pong!");
   }
 
   if (interaction.commandName === "weather") {
@@ -138,3 +137,46 @@ client.on("interactionCreate", async (interaction) => {
   });
 
 client.login(process.env.token);
+
+const commands = [
+  {
+    name: "hey",
+    description: "Replies with hey!",
+  },
+  {
+    name: "ping",
+    description: "Pong!",
+  },
+  {
+    name: "weather",
+    description: "Current temp and wind for stord",
+  },
+  {
+    name: "coinflip",
+    description: "flips a coins",
+  },
+  {
+    name: "randomnumber100",
+    description: "random nummber 1-100",
+  },
+  {
+    name: "randomnumber50",
+    description: "random nummber 1-50",
+  },
+  {
+    name: "randomnumber25",
+    description: "random nummber 1-25",
+  },
+  {
+    name: "randomnumber10",
+    description: "random nummber 1-10",
+  },
+  {
+    name: "randomnumber5",
+    description: "random nummber 1-5",
+  },
+  {
+    name: "randomnumber1000",
+    description: "random nummber 1-1000",
+  },
+];
