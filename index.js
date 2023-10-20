@@ -15,6 +15,11 @@ client.on("ready", (c) => {
   console.log("I am online and full of errors, sincerly", `${c.user.username}`);
 });
 
+client.on('guildCreate', async (guild) => {
+  guild.commands.set(commands).then(() => 
+  console.log(`Commands deployed in guild ${guild.name}!`));
+  })
+
 client.on("messageCreate", async (message) => {
   console.log(message.author.username + ": " + message.content);
   if (message.author.bot) {
