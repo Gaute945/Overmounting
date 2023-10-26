@@ -16,9 +16,9 @@ client.on("ready", (c) => {
 });
 
 client.on('guildCreate', async (guild) => {
-  guild.commands.set(commands).then(() => 
-  console.log(`Commands deployed in guild ${guild.name}!`));
-  })
+  guild.commands.set(commands).then(() =>
+    console.log(`Commands deployed in guild ${guild.name}!`));
+});
 
 client.on("messageCreate", async (message) => {
   if (message.author.bot) {
@@ -72,69 +72,69 @@ client.on("interactionCreate", async (interaction) => {
     returnWeather();
   }
 
-    if (interaction.commandName === "coinflip") {
-      function getCoin() {
-        return Math.floor(Math.random() * 2) + 1;
-      }
+  if (interaction.commandName === "coinflip") {
+    function getCoin() {
+      return Math.floor(Math.random() * 2) + 1;
+    }
 
-      var coin = getCoin();
+    var coin = getCoin();
 
-      if (coin == 1) {
-        return interaction.reply("Head Wins!");
-      }
-      if (coin == 2) {
-        return interaction.reply("Tails Wins!");
-      }
+    if (coin == 1) {
+      return interaction.reply("Head Wins!");
     }
-    if (interaction.commandName === "randomnumber100") {
-      function getRandomNumber100() {
-        var randomNumber100 = Math.floor(Math.random() * 100) + 1;
-        return randomNumber100.toString();
-      }
-      var randomNumberString100 = getRandomNumber100();
-      return interaction.reply(randomNumberString100);
+    if (coin == 2) {
+      return interaction.reply("Tails Wins!");
     }
-    if (interaction.commandName === "randomnumber50") {
-      function getRandomNumber50() {
-        var randomNumber50 = Math.floor(Math.random() * 50) + 1;
-        return randomNumber50.toString();
-      }
-      var randomNumberString50 = getRandomNumber50();
-      return interaction.reply(randomNumberString50);
+  }
+  if (interaction.commandName === "randomnumber100") {
+    function getRandomNumber100() {
+      var randomNumber100 = Math.floor(Math.random() * 100) + 1;
+      return randomNumber100.toString();
     }
-    if (interaction.commandName === "randomnumber25") {
-      function getRandomNumber25() {
-        var randomNumber25 = Math.floor(Math.random() * 25) + 1;
-        return randomNumber25.toString();
-      }
-      var randomNumberString25 = getRandomNumber25();
-      return interaction.reply(randomNumberString25);
+    var randomNumberString100 = getRandomNumber100();
+    return interaction.reply(randomNumberString100);
+  }
+  if (interaction.commandName === "randomnumber50") {
+    function getRandomNumber50() {
+      var randomNumber50 = Math.floor(Math.random() * 50) + 1;
+      return randomNumber50.toString();
     }
-    if (interaction.commandName === "randomnumber10") {
-      function getRandomNumber10() {
-        var randomNumber10 = Math.floor(Math.random() * 10) + 1;
-        return randomNumber10.toString();
-      }
-      var randomNumberString10 = getRandomNumber10();
-      return interaction.reply(randomNumberString10);
+    var randomNumberString50 = getRandomNumber50();
+    return interaction.reply(randomNumberString50);
+  }
+  if (interaction.commandName === "randomnumber25") {
+    function getRandomNumber25() {
+      var randomNumber25 = Math.floor(Math.random() * 25) + 1;
+      return randomNumber25.toString();
     }
-    if (interaction.commandName === "randomnumber5") {
-      function getRandomNumber5() {
-        var randomNumber5 = Math.floor(Math.random() * 5) + 1;
-        return randomNumber5.toString();
-      }
-      var randomNumberString5 = getRandomNumber5();
-      return interaction.reply(randomNumberString5);
+    var randomNumberString25 = getRandomNumber25();
+    return interaction.reply(randomNumberString25);
+  }
+  if (interaction.commandName === "randomnumber10") {
+    function getRandomNumber10() {
+      var randomNumber10 = Math.floor(Math.random() * 10) + 1;
+      return randomNumber10.toString();
     }
-    if (interaction.commandName === "randomnumber1000") {
-      function getRandomNumber1000() {
-        var randomNumber1000 = Math.floor(Math.random() * 1000) + 1;
-        return randomNumber1000.toString();
-      }
-      var randomNumberString1000 = getRandomNumber1000();
-      return interaction.reply(randomNumberString1000);
+    var randomNumberString10 = getRandomNumber10();
+    return interaction.reply(randomNumberString10);
+  }
+  if (interaction.commandName === "randomnumber5") {
+    function getRandomNumber5() {
+      var randomNumber5 = Math.floor(Math.random() * 5) + 1;
+      return randomNumber5.toString();
     }
-  });
+    var randomNumberString5 = getRandomNumber5();
+    return interaction.reply(randomNumberString5);
+  }
+  if (interaction.commandName === "randomnumber1000") {
+    function getRandomNumber1000() {
+      var randomNumber1000 = Math.floor(Math.random() * 1000) + 1;
+      return randomNumber1000.toString();
+    }
+    var randomNumberString1000 = getRandomNumber1000();
+    return interaction.reply(randomNumberString1000);
+  }
+});
 
 client.login(process.env.token);
 
