@@ -62,7 +62,7 @@ client.on("interactionCreate", async (interaction) => {
         const temperature = weatherData.current_weather.temperature + 4.5;
         const windspeed = weatherData.current_weather.windspeed;
         const responseText = `${temperature} °C, ${windspeed} km/h`;
-        await await interaction.reply(responseText);
+        await interaction.reply(responseText);
       } else {
         // Handle the case where the API request fails
         await interaction.reply("Failed to fetch weather data.");
