@@ -26,7 +26,7 @@ client.on("messageCreate", async (message) => {
   }
 
   if (message.content == "hello") {
-    message.reply(":wave:");
+    await message.reply(":wave:");
   }
 });
 
@@ -34,11 +34,11 @@ client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
   if (interaction.commandName === "hey") {
-    return interaction.reply("hey!");
+    return await interaction.reply("hey!");
   }
 
   if (interaction.commandName === "ping") {
-    return interaction.reply("pong!");
+    return await interaction.reply("pong!");
   }
 
   if (interaction.commandName === "weather") {
@@ -62,10 +62,10 @@ client.on("interactionCreate", async (interaction) => {
         const temperature = weatherData.current_weather.temperature + 4.5;
         const windspeed = weatherData.current_weather.windspeed;
         const responseText = `${temperature} °C, ${windspeed} km/h`;
-        interaction.reply(responseText);
+        await await interaction.reply(responseText);
       } else {
         // Handle the case where the API request fails
-        interaction.reply("Failed to fetch weather data.");
+        await interaction.reply("Failed to fetch weather data.");
       }
     }
 
@@ -80,10 +80,10 @@ client.on("interactionCreate", async (interaction) => {
     var coin = getCoin();
 
     if (coin == 1) {
-      return interaction.reply("Head Wins!");
+      return await interaction.reply("Head Wins!");
     }
     if (coin == 2) {
-      return interaction.reply("Tails Wins!");
+      return await interaction.reply("Tails Wins!");
     }
   }
   if (interaction.commandName === "randomnumber100") {
@@ -92,7 +92,7 @@ client.on("interactionCreate", async (interaction) => {
       return randomNumber100.toString();
     }
     var randomNumberString100 = getRandomNumber100();
-    return interaction.reply(randomNumberString100);
+    return await interaction.reply(randomNumberString100);
   }
   if (interaction.commandName === "randomnumber50") {
     function getRandomNumber50() {
@@ -100,7 +100,7 @@ client.on("interactionCreate", async (interaction) => {
       return randomNumber50.toString();
     }
     var randomNumberString50 = getRandomNumber50();
-    return interaction.reply(randomNumberString50);
+    return await interaction.reply(randomNumberString50);
   }
   if (interaction.commandName === "randomnumber25") {
     function getRandomNumber25() {
@@ -108,7 +108,7 @@ client.on("interactionCreate", async (interaction) => {
       return randomNumber25.toString();
     }
     var randomNumberString25 = getRandomNumber25();
-    return interaction.reply(randomNumberString25);
+    return await interaction.reply(randomNumberString25);
   }
   if (interaction.commandName === "randomnumber10") {
     function getRandomNumber10() {
@@ -116,7 +116,7 @@ client.on("interactionCreate", async (interaction) => {
       return randomNumber10.toString();
     }
     var randomNumberString10 = getRandomNumber10();
-    return interaction.reply(randomNumberString10);
+    return await interaction.reply(randomNumberString10);
   }
   if (interaction.commandName === "randomnumber5") {
     function getRandomNumber5() {
@@ -124,7 +124,7 @@ client.on("interactionCreate", async (interaction) => {
       return randomNumber5.toString();
     }
     var randomNumberString5 = getRandomNumber5();
-    return interaction.reply(randomNumberString5);
+    return await interaction.reply(randomNumberString5);
   }
   if (interaction.commandName === "randomnumber1000") {
     function getRandomNumber1000() {
@@ -132,7 +132,7 @@ client.on("interactionCreate", async (interaction) => {
       return randomNumber1000.toString();
     }
     var randomNumberString1000 = getRandomNumber1000();
-    return interaction.reply(randomNumberString1000);
+    return await interaction.reply(randomNumberString1000);
   }
 });
 
