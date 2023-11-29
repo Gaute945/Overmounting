@@ -41,6 +41,19 @@ client.on("interactionCreate", async (interaction) => {
     return await interaction.reply("pong!");
   }
 
+  if (interaction.commandName === "help") {
+    const  CommandList = await getCommands(commands)
+    await interaction.reply(CommandList);
+
+    async function getCommands(commands) {
+      StringCommands = "/";
+      for (let track = 0; track < commands.length; track++) {
+        StringCommands += commands[track].name + (track < commands.length - 1 ? " /" : "");
+      }
+        return StringCommands;
+      }
+  }
+
   if (interaction.commandName === "weather") {
     const axios = require("axios");
 
@@ -178,5 +191,9 @@ const commands = [
   {
     name: "randomnumber1000",
     description: "random nummber 1-1000",
+  },
+  {
+    name:"help",
+    description:" says all the commands",
   },
 ];
