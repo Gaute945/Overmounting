@@ -42,16 +42,16 @@ client.on("interactionCreate", async (interaction) => {
   }
 
   if (interaction.commandName === "help") {
-    StringCommands = "/";
-for (let track = 0; track < commands.length; track++) 
-  {
-    StringCommands += commands[track].name;
-if (track < commands.length - 1)
-  {
-    StringCommands += " /";
-  }
-  }
-    return await interaction.reply(StringCommands);
+    const  CommandList = await getCommands(commands)
+    await interaction.reply(CommandList);
+
+    async function getCommands(commands) {
+      StringCommands = "/";
+      for (let track = 0; track < commands.length; track++) {
+        StringCommands += commands[track].name + (track < commands.length - 1 ? " /" : "");
+      }
+        return StringCommands;
+      }
   }
 
   if (interaction.commandName === "weather") {
