@@ -7,7 +7,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/mrbobai/Overmounting?style=flat-square)](https://github.com/your-username/your-repository/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/mrbobai/Overmounting?style=flat-square)](https://github.com/mrbobai/Overmounting/issues?q=is%3Aissue+is%3Aclosed)
 
-**Issues are being used as a TODO list currently**
+**Issues are being used as a todo list currently**
 
 > Overmounting is a discord bot made by the Undermounting team!<br>
 > You can invite and use the bot with this link: https://discord.com/oauth2/authorize?client_id=1095385301834289312&permissions=2048&scope=bot%20applications.commands
