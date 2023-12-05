@@ -28,5 +28,5 @@ If you discover any security concerns or vulnerabilities in our codebase, please
 
 Thank you for your commitment to the security of Overmounting.
 
-Overmounting
+Undermounting
 mrboobai@proton.me
