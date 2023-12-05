@@ -3,11 +3,10 @@ name: Discord Bot CI/CD
 on:
   push:
     branches:
-      - test
       - main
 
 jobs:
-  build-and-deploy:
+  syntax-check:
     runs-on: ubuntu-latest
 
     strategy:
@@ -28,13 +27,3 @@ jobs:
 
       - name: Check for Syntax Errors
         run: node -c index.js
-
-      - name: Deploy to Main Branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/test' && success()
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
-          git fetch origin main:main
-          git checkout main
-          git merge --no-ff test
-          git push origin main
