@@ -1,34 +1,48 @@
-name: Discord Bot CI/CD
+name: Check Syntax and Merge 'test' into 'main'
 
 on:
   push:
     branches:
-      - test
       - main
+      - test
 
 jobs:
-  build-and-deploy:
-
+  syntax-check-and-merge:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
 
-    - name: Install Dependencies
-      run: npm install discord.js nodemon axios dotenv
-      # Add any additional dependencies you need
+      - name: Install Dependencies
+        run: npm install discord.js nodemon axios dotenv
 
-    - name: Check for Syntax Errors on Main Branch
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      run: node -c index.js
-      # This checks for syntax errors in index.js on the main branch
+      - name: Check for Syntax Errors (main)
+        run: |
+          git checkout main
+          if [[ -n $(git diff --name-only ${{ github.sha }} HEAD) ]]; then
+            echo "Checking syntax errors in main branch"
+            node -c $(git diff --name-only ${{ github.sha }} HEAD)
+          fi
+
+      - name: Check for Syntax Errors (test)
+        run: |
+          git checkout test
+          if [[ -n $(git diff --name-only ${{ github.sha }} HEAD) ]]; then
+            echo "Checking syntax errors in test branch"
+            node -c $(git diff --name-only ${{ github.sha }} HEAD)
+          fi
+
+      - name: Merge 'test' into 'main'
+        if: github.event_name == 'push' && github.ref == 'refs/heads/test' && success()
+        run: |
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git checkout main
+          git merge --no-ff test
+          git push origin main
