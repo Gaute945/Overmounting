@@ -15,7 +15,7 @@ client.on("ready", (c) => {
   console.log("I am online and full of errors, sincerly", `${c.user.username}`);
 });
 
-client.on('guildCreate', asyn (guild) => {
+client.on('guildCreate', async (guild) => {
   guild.commands.set(commands).then(() =>
     console.log(`Commands deployed in guild ${guild.name}!`));
 });
