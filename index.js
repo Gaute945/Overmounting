@@ -1,6 +1,6 @@
 require("dotenv").config();
 require("axios");
-const { Client, IntentsBitField } = require("discord.js");
+const { Client, IntentsBitField  = require("discord.js");
 const { stringify } = require("nodemon/lib/utils");
 const client = new Client({
   intents: [
