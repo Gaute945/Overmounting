@@ -6,6 +6,7 @@
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/mrbobai/Overmounting?style=flat-square)](https://github.com/your-username/your-repository/pulls)
 [![GitHub issues](https://img.shields.io/github/issues/mrbobai/Overmounting?style=flat-square)](https://github.com/your-username/your-repository/issues)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/mrbobai/Overmounting?style=flat-square)](https://github.com/mrbobai/Overmounting/issues?q=is%3Aissue+is%3Aclosed)
+[![Discord Bot CI/CD](https://github.com/mrbobai/Overmounting/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/mrbobai/Overmounting/actions/workflows/node.js.yml)
 
 **Issues are being used as a todo list currently**
 
