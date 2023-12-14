@@ -79,7 +79,7 @@ client.on("interactionCreate", async (interaction) => {
 			if (weatherData) {
 				const temperature =
 					Math.round(weatherData.current_weather.temperature) + 4.5;
-				const windSpeed = weatherData.current_weather.windSpeed;
+				const windSpeed = weatherData.current_weather.windspeed;
 				const responseText = `${temperature} °C, ${windSpeed} km/h`;
 				await interaction.reply(responseText);
 			} else {
