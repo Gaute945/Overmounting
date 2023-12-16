@@ -11,17 +11,26 @@ const client = new Client({
 	],
 });
 
-client.on("ready", (c) => {
-	console.log(
-		"I am online and full of errors, sincerely",
-		`${c.user.username}`
-	);
+client.on("ready", () => {
+    console.log(`I am online and ready as ${client.user.username}`);
+
+    // Iterate through each guild to deploy commands
+    client.guilds.cache.forEach((guild) => {
+        // Assuming 'commands' is an array of slash command objects
+        guild.commands.set(commands)
+            .then(() => {
+                console.log(`Commands deployed in ${guild.name} successfully!`);
+            })
+            .catch((error) => {
+                console.error(`Error deploying commands in ${guild.name}: ${error.message}`);
+            });
+    });
 });
 
 client.on("guildCreate", async (guild) => {
 	guild.commands
 		.set(commands)
-		.then(() => console.log(`Commands deployed in guild ${guild.name}!`));
+		.then(() => console.log(`Bot added to the guild ${guild.name}!`));
 });
 
 client.on("messageCreate", async (message) => {
