@@ -91,67 +91,21 @@ client.on("interactionCreate", async (interaction) => {
 		returnWeather();
 	}
 
-	if (interaction.commandName === "coin flip") {
-		function getCoin() {
-			return Math.floor(Math.random() * 2) + 1;
+	if (interaction.commandName === "random-number") {
+		const min = parseInt(interaction.options.getString("min"));
+		const max = parseInt(interaction.options.getString("max"));
+
+		if (isNaN(min) || isNaN(max)) {
+			// if user inputs no number
+			await interaction.reply(
+				"Please provide valid values for both min and max."
+			);
 		}
 
-		var coin = getCoin();
+		// generates random number
+		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
-		if (coin == 1) {
-			return await interaction.reply("Head Wins!");
-		}
-		if (coin == 2) {
-			return await interaction.reply("Tails Wins!");
-		}
-	}
-	if (interaction.commandName === "random number100") {
-		function getRandomNumber100() {
-			var randomNumber100 = Math.floor(Math.random() * 100) + 1;
-			return randomNumber100.toString();
-		}
-		var randomNumberString100 = getRandomNumber100();
-		return await interaction.reply(randomNumberString100);
-	}
-	if (interaction.commandName === "random number50") {
-		function getRandomNumber50() {
-			var randomNumber50 = Math.floor(Math.random() * 50) + 1;
-			return randomNumber50.toString();
-		}
-		var randomNumberString50 = getRandomNumber50();
-		return await interaction.reply(randomNumberString50);
-	}
-	if (interaction.commandName === "random number25") {
-		function getRandomNumber25() {
-			var randomNumber25 = Math.floor(Math.random() * 25) + 1;
-			return randomNumber25.toString();
-		}
-		var randomNumberString25 = getRandomNumber25();
-		return await interaction.reply(randomNumberString25);
-	}
-	if (interaction.commandName === "random number10") {
-		function getRandomNumber10() {
-			var randomNumber10 = Math.floor(Math.random() * 10) + 1;
-			return randomNumber10.toString();
-		}
-		var randomNumberString10 = getRandomNumber10();
-		return await interaction.reply(randomNumberString10);
-	}
-	if (interaction.commandName === "random number 5") {
-		function getRandomNumber5() {
-			var randomNumber5 = Math.floor(Math.random() * 5) + 1;
-			return randomNumber5.toString();
-		}
-		var randomNumberString5 = getRandomNumber5();
-		return await interaction.reply(randomNumberString5);
-	}
-	if (interaction.commandName === "random number1000") {
-		function getRandomNumber1000() {
-			var randomNumber1000 = Math.floor(Math.random() * 1000) + 1;
-			return randomNumber1000.toString();
-		}
-		var randomNumberString1000 = getRandomNumber1000();
-		return await interaction.reply(randomNumberString1000);
+		await interaction.reply(`${randomNumber}`);
 	}
 });
 
@@ -171,32 +125,24 @@ const commands = [
 		description: "Current temp and wind for Stord",
 	},
 	{
-		name: "coin flip",
+		name: "coin-flip", // Updated command name
 		description: "flips a coin",
 	},
 	{
-		name: "random number100",
-		description: "random number 1-100",
+		name: "random-number", // Updated command name
+		description: "random number min-max",
 		options: [
 			{
-				name: "Min",
-				description: "The minimum value",
 				type: 3,
+				name: "min",
+				description: "The minimum value",
 				required: true,
-				choices: [
-					{
-						name: "Dog",
-						value: "animal_dog",
-					},
-					{
-						name: "Cat",
-						value: "animal_cat",
-					},
-					{
-						name: "Penguin",
-						value: "animal_penguin",
-					},
-				],
+			},
+			{
+				type: 3,
+				name: "max",
+				description: "The maximum value",
+				required: true,
 			},
 		],
 	},
