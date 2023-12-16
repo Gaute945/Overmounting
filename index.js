@@ -96,16 +96,19 @@ client.on("interactionCreate", async (interaction) => {
 		const max = parseInt(interaction.options.getString("max"));
 
 		if (isNaN(min) || isNaN(max)) {
-			// if user inputs no number
-			await interaction.reply(
-				"Please provide valid values for both min and max."
-			);
+			// if user input is not a valid
+			await interaction.reply("Please provide valid values for both min and max.");
+			return;
 		}
 
 		// generates random number
 		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
-		await interaction.reply(`${randomNumber}`);
+		// Include min and max values in the response message
+        const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
+
+        // Reply to the channel with the customized response message
+        await interaction.reply(responseMessage);
 	}
 });
 
