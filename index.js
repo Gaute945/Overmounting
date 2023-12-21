@@ -14,8 +14,10 @@ const client = new Client({
 
 client.on("ready", () => {
     console.log(`I am online and ready as ${client.user.username}`);
-
+  
     client.guilds.cache.forEach((guild) => {
+        // Assuming 'commands' is an array of slash command objects
+      
         guild.commands.set(commands)
             .then(() => {
                 console.log(`Commands deployed in ${guild.name} successfully!`);
@@ -29,7 +31,7 @@ client.on("ready", () => {
 client.on("guildCreate", async (guild) => {
 	guild.commands
 		.set(commands)
-		.then(() => console.log(`Commands deployed in guild ${guild.name}!`));
+		.then(() => console.log(`Bot added to the guild ${guild.name}!`));
 });
 
 client.on("interactionCreate", async (interaction) => {
