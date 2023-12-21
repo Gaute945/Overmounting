@@ -1,7 +1,8 @@
+// removed nodemon and unused/useless code
+
 require("dotenv").config();
 require("axios");
 const { Client, IntentsBitField } = require("discord.js");
-const { stringify } = require("nodemon/lib/utils");
 const client = new Client({
 	intents: [
 		IntentsBitField.Flags.Guilds,
@@ -24,26 +25,8 @@ client.on("guildCreate", async (guild) => {
 		.then(() => console.log(`Commands deployed in guild ${guild.name}!`));
 });
 
-client.on("messageCreate", async (message) => {
-	if (message.author.bot) {
-		return;
-	}
-
-	if (message.content == "hello") {
-		await message.reply(":wave:");
-	}
-});
-
 client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
-
-	if (interaction.commandName === "hey") {
-		return await interaction.reply("hey!");
-	}
-
-	if (interaction.commandName === "ping") {
-		return await interaction.reply("pong!");
-	}
 
 	if (interaction.commandName === "help") {
 		const CommandList = await getCommands(commands);
@@ -97,7 +80,9 @@ client.on("interactionCreate", async (interaction) => {
 
 		if (isNaN(min) || isNaN(max)) {
 			// if user input is not a valid
-			await interaction.reply("Please provide valid values for both min and max.");
+			await interaction.reply(
+				"Please provide valid values for both min and max."
+			);
 			return;
 		}
 
@@ -105,24 +90,16 @@ client.on("interactionCreate", async (interaction) => {
 		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
 		// Include min and max values in the response message
-        const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
+		const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
 
-        // Reply to the channel with the customized response message
-        await interaction.reply(responseMessage);
+		// Reply to the channel with the customized response message
+		await interaction.reply(responseMessage);
 	}
 });
 
 client.login(process.env.token);
 
 const commands = [
-	{
-		name: "hey",
-		description: "Replies with hey!",
-	},
-	{
-		name: "ping",
-		description: "Pong!",
-	},
 	{
 		name: "weather",
 		description: "Current temp and wind for Stord",
