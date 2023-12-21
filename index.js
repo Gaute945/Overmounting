@@ -100,6 +100,21 @@ client.on("interactionCreate", async (interaction) => {
 		returnWeather();
 	}
 
+	if (interaction.commandName === "coin-flip") {
+		function getCoin() {
+			return Math.floor(Math.random() * 2) + 1;
+		}
+
+		var coin = getCoin();
+
+		if (coin == 1) {
+			return await interaction.reply("Head Wins!");
+		}
+		if (coin == 2) {
+			return await interaction.reply("Tails Wins!");
+		}
+	}
+
 	if (interaction.commandName === "random-number") {
 		const min = parseInt(interaction.options.getString("min"));
 		const max = parseInt(interaction.options.getString("max"));
