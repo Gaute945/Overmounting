@@ -1,4 +1,4 @@
-// removed nodemon and unused/useless code
+// removed nodemon and unused/useless code/commands
 
 require("dotenv").config();
 require("axios");
@@ -12,11 +12,18 @@ const client = new Client({
 	],
 });
 
-client.on("ready", (c) => {
-	console.log(
-		"I am online and full of errors, sincerely",
-		`${c.user.username}`
-	);
+client.on("ready", () => {
+    console.log(`I am online and ready as ${client.user.username}`);
+
+    client.guilds.cache.forEach((guild) => {
+        guild.commands.set(commands)
+            .then(() => {
+                console.log(`Commands deployed in ${guild.name} successfully!`);
+            })
+            .catch((error) => {
+                console.error(`Error deploying commands in ${guild.name}: ${error.message}`);
+            });
+    });
 });
 
 client.on("guildCreate", async (guild) => {
