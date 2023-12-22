@@ -1,7 +1,6 @@
 require("dotenv").config();
 require("axios");
 const { Client, IntentsBitField } = require("discord.js");
-const { stringify } = require("nodemon/lib/utils");
 const client = new Client({
 	intents: [
 		IntentsBitField.Flags.Guilds,
@@ -11,21 +10,25 @@ const client = new Client({
 	],
 });
 
-client.on("ready", () => {
-    console.log(`I am online and ready as ${client.user.username}`);
-
-    // Iterate through each guild to deploy commands
-    client.guilds.cache.forEach((guild) => {
-        // Assuming 'commands' is an array of slash command objects
-        guild.commands.set(commands)
-            .then(() => {
-                console.log(`Commands deployed in ${guild.name} successfully!`);
-            })
-            .catch((error) => {
-                console.error(`Error deploying commands in ${guild.name}: ${error.message}`);
-            });
-    });
+client.on("ready", async () => {
+	console.log(`I am online and ready as ${client.user.username}`);
+	await regAllCmd();
 });
+
+async function regAllCmd() {
+	client.guilds.cache.forEach((guild) => {
+		guild.commands
+			.set(commands)
+			.then(() => {
+				console.log(`Commands deployed in ${guild.name} successfully!`);
+			})
+			.catch((error) => {
+				console.error(
+					`Error deploying commands in ${guild.name}: ${error.message}`
+				);
+			});
+	});
+}
 
 client.on("guildCreate", async (guild) => {
 	guild.commands
@@ -33,26 +36,8 @@ client.on("guildCreate", async (guild) => {
 		.then(() => console.log(`Bot added to the guild ${guild.name}!`));
 });
 
-client.on("messageCreate", async (message) => {
-	if (message.author.bot) {
-		return;
-	}
-
-	if (message.content == "hello") {
-		await message.reply(":wave:");
-	}
-});
-
 client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
-
-	if (interaction.commandName === "hey") {
-		return await interaction.reply("hey!");
-	}
-
-	if (interaction.commandName === "ping") {
-		return await interaction.reply("pong!");
-	}
 
 	if (interaction.commandName === "help") {
 		const CommandList = await getCommands(commands);
@@ -61,8 +46,9 @@ client.on("interactionCreate", async (interaction) => {
 		async function getCommands(commands) {
 			StringCommands = "/";
 			for (let track = 0; track < commands.length; track++) {
-				StringCommands +=
-					commands[track].name + (track < commands.length - 1 ? " /" : "");
+				StringCommands += commands[track].name + (
+					track < commands.length - 1 ? " /" : ""
+			    );
 			}
 			return StringCommands;
 		}
@@ -106,18 +92,18 @@ client.on("interactionCreate", async (interaction) => {
 
 		if (isNaN(min) || isNaN(max)) {
 			// if user input is not a valid
-			await interaction.reply("Please provide valid values for both min and max.");
+			await interaction.reply(
+				"Please provide valid values for both min and max."
+			);
 			return;
 		}
 
-		// generates random number
 		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
-		// Include min and max values in the response message
-        const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
+		const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
 
-        // Reply to the channel with the customized response message
-        await interaction.reply(responseMessage);
+		// Reply to the channel with the customized response message
+		await interaction.reply(responseMessage);
 	}
 });
 
@@ -125,23 +111,15 @@ client.login(process.env.token);
 
 const commands = [
 	{
-		name: "hey",
-		description: "Replies with hey!",
-	},
-	{
-		name: "ping",
-		description: "Pong!",
-	},
-	{
 		name: "weather",
 		description: "Current temp and wind for Stord",
 	},
 	{
-		name: "coin-flip", // Updated command name
+		name: "coin-flip",
 		description: "flips a coin",
 	},
 	{
-		name: "random-number", // Updated command name
+		name: "random-number",
 		description: "random number min-max",
 		options: [
 			{
