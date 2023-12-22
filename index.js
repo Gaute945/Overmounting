@@ -46,8 +46,9 @@ client.on("interactionCreate", async (interaction) => {
 		async function getCommands(commands) {
 			StringCommands = "/";
 			for (let track = 0; track < commands.length; track++) {
-				StringCommands +=
-					commands[track].name + (track < commands.length - 1 ? " /" : "");
+				StringCommands += commands[track].name + (
+					track < commands.length - 1 ? " /" : ""
+			    );
 			}
 			return StringCommands;
 		}
@@ -97,10 +98,8 @@ client.on("interactionCreate", async (interaction) => {
 			return;
 		}
 
-		// generates random number
 		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
 
-		// Include min and max values in the response message
 		const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
 
 		// Reply to the channel with the customized response message
@@ -116,11 +115,11 @@ const commands = [
 		description: "Current temp and wind for Stord",
 	},
 	{
-		name: "coin-flip", // Updated command name
+		name: "coin-flip",
 		description: "flips a coin",
 	},
 	{
-		name: "random-number", // Updated command name
+		name: "random-number",
 		description: "random number min-max",
 		options: [
 			{
