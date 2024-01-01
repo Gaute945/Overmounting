@@ -109,8 +109,8 @@ client.on("interactionCreate", async (interaction) => {
 				return await interaction.reply("Head Wins!");
 
 			case 2:
-			return await interaction.reply("Tails Wins!");
-		
+				return await interaction.reply("Tails Wins!");
+
 			default:
 				return await interaction.reply("Value is out of valid range");
 		}
