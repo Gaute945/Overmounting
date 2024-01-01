@@ -86,6 +86,23 @@ client.on("interactionCreate", async (interaction) => {
 		returnWeather();
 	}
 
+	if (interaction.commandName === "coin-flip") {
+		async function getCoin() {
+			return Math.floor(Math.random() * 2) + 1;
+		}
+
+		switch (await getCoin()) {
+			case 1:
+				return await interaction.reply("Head Wins!");
+
+			case 2:
+				return await interaction.reply("Tails Wins!");
+
+			default:
+				return await interaction.reply("Value is out of valid range");
+		}
+	}
+
 	if (interaction.commandName === "random-number") {
 		const min = parseInt(interaction.options.getString("min"));
 		const max = parseInt(interaction.options.getString("max"));
