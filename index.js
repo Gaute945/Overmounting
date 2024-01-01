@@ -1,7 +1,6 @@
 require("dotenv").config();
 require("axios");
 const { Client, IntentsBitField } = require("discord.js");
-const { stringify } = require("nodemon/lib/utils");
 const client = new Client({
 	intents: [
 		IntentsBitField.Flags.Guilds,
@@ -101,17 +100,20 @@ client.on("interactionCreate", async (interaction) => {
 	}
 
 	if (interaction.commandName === "coin-flip") {
-		function getCoin() {
+
+		async function getCoin() {
 			return Math.floor(Math.random() * 2) + 1;
 		}
 
-		var coin = getCoin();
+		switch (await getCoin()) {
+			case 1:
+				return await interaction.reply("Head Wins!");
 
-		if (coin == 1) {
-			return await interaction.reply("Head Wins!");
-		}
-		if (coin == 2) {
+			case 2:
 			return await interaction.reply("Tails Wins!");
+		
+			default:
+				return await interaction.reply("Value is out of valid range");
 		}
 	}
 
@@ -152,11 +154,11 @@ const commands = [
 		description: "Current temp and wind for Stord",
 	},
 	{
-		name: "coin-flip", // Updated command name
+		name: "coin-flip",
 		description: "flips a coin",
 	},
 	{
-		name: "random-number", // Updated command name
+		name: "random-number",
 		description: "random number min-max",
 		options: [
 			{
