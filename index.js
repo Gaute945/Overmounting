@@ -100,7 +100,6 @@ client.on("interactionCreate", async (interaction) => {
 	}
 
 	if (interaction.commandName === "coin-flip") {
-
 		async function getCoin() {
 			return Math.floor(Math.random() * 2) + 1;
 		}
