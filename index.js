@@ -45,12 +45,11 @@ client.on("interactionCreate", async (interaction) => {
 			// throw new Error ("test error");
 			const CommandList = await getCommands(commands);
 			await interaction.reply(CommandList);
-		
 		} catch (error) {
 			console.error("Error while getting commands:", error);
 			await interaction.reply("error with function: getCommands");
 		}
-		
+
 		async function getCommands(commands) {
 			let StringCommands = "/";
 			try {
@@ -60,7 +59,6 @@ client.on("interactionCreate", async (interaction) => {
 						commands[track].name + (track < commands.length - 1 ? " /" : "");
 				}
 				return StringCommands;
-			
 			} catch (error) {
 				throw Error;
 			}
@@ -68,16 +66,14 @@ client.on("interactionCreate", async (interaction) => {
 	}
 
 	if (interaction.commandName === "weather") {
-		const axios = require("axios");
-
 		async function fetchWeather() {
 			try {
 				// throw new Error ("test error");
+				const axios = require("axios");
 				const response = await axios.get(
 					"https://api.open-meteo.com/v1/forecast?latitude=59.92&longitude=5.45&hourly=temperature_2m,precipitation_probability,precipitation&current_weather=true&forecast_days=1&timezone=auto"
 				);
 				return response.data;
-			
 			} catch (error) {
 				console.error("Error while fetching weather:", error);
 				await interaction.reply("error with function: fetchWeather");
@@ -127,25 +123,26 @@ client.on("interactionCreate", async (interaction) => {
 		}
 	}
 
-	// needs refactoring before error handling
 	if (interaction.commandName === "random-number") {
-		const min = parseInt(interaction.options.getString("min"));
-		const max = parseInt(interaction.options.getString("max"));
+		try {
+			// throw new Error ("test error");
+			const min = parseInt(interaction.options.getString("min"));
+			const max = parseInt(interaction.options.getString("max"));
 
-		if (isNaN(min) || isNaN(max)) {
-			// if user input is not a valid
-			await interaction.reply(
-				"Please provide valid values for both min and max."
-			);
-			return;
+			if (min > max) {
+				return await interaction.reply(
+					"Please provide valid values for both min and max."
+				);
+			}
+
+			const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+			const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
+
+			await interaction.reply(responseMessage);
+		} catch (error) {
+			console.error("error with random-number command", error);
+			await interaction.reply("Error while generating random number");
 		}
-
-		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-
-		const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
-
-		// Reply to the channel with the customized response message
-		await interaction.reply(responseMessage);
 	}
 });
 
