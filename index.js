@@ -20,6 +20,7 @@ async function regAllCmd() {
 		guild.commands
 			.set(commands)
 			.then(() => {
+				// throw new Error ("test error");
 				console.log(`Commands deployed in ${guild.name} successfully!`);
 			})
 			.catch((error) => {
@@ -40,46 +41,59 @@ client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 
 	if (interaction.commandName === "help") {
-		const CommandList = await getCommands(commands);
-		await interaction.reply(CommandList);
+		try {
+			// throw new Error ("test error");
+			const CommandList = await getCommands(commands);
+			await interaction.reply(CommandList);
+		} catch (error) {
+			console.error("Error while getting commands:", error);
+			await interaction.reply("error with function: getCommands");
+		}
 
 		async function getCommands(commands) {
-			StringCommands = "/";
-			for (let track = 0; track < commands.length; track++) {
-				StringCommands += commands[track].name + (
-					track < commands.length - 1 ? " /" : ""
-			    );
+			let StringCommands = "/";
+			try {
+				// throw new Error ("test error");
+				for (let track = 0; track < commands.length; track++) {
+					StringCommands +=
+						commands[track].name + (track < commands.length - 1 ? " /" : "");
+				}
+				return StringCommands;
+			} catch (error) {
+				throw Error;
 			}
-			return StringCommands;
 		}
 	}
 
 	if (interaction.commandName === "weather") {
-		const axios = require("axios");
-
 		async function fetchWeather() {
 			try {
+				// throw new Error ("test error");
+				const axios = require("axios");
 				const response = await axios.get(
 					"https://api.open-meteo.com/v1/forecast?latitude=59.92&longitude=5.45&hourly=temperature_2m,precipitation_probability,precipitation&current_weather=true&forecast_days=1&timezone=auto"
 				);
 				return response.data;
 			} catch (error) {
-				console.error("Failed to fetch weather data:", error);
-				return null;
+				console.error("Error while fetching weather:", error);
+				await interaction.reply("error with function: fetchWeather");
 			}
 		}
 
 		async function returnWeather() {
 			const weatherData = await fetchWeather();
-			if (weatherData) {
-				const temperature =
-					Math.round(weatherData.current_weather.temperature) + 4.5;
-				const windSpeed = weatherData.current_weather.windspeed;
-				const responseText = `${temperature} °C, ${windSpeed} km/h`;
-				await interaction.reply(responseText);
-			} else {
-				// Handle the case where the API request fails
-				await interaction.reply("Failed to fetch weather data.");
+			try {
+				// throw new Error ("test error");
+				if (weatherData) {
+					const temperature =
+						Math.round(weatherData.current_weather.temperature) + 4.5;
+					const windSpeed = weatherData.current_weather.windspeed;
+					const responseText = `${temperature} °C, ${windSpeed} km/h`;
+					await interaction.reply(responseText);
+				}
+			} catch (error) {
+				console.error("Error while returning weather:", error);
+				await interaction.reply("error with function: returnWeather");
 			}
 		}
 
@@ -91,36 +105,44 @@ client.on("interactionCreate", async (interaction) => {
 			return Math.floor(Math.random() * 2) + 1;
 		}
 
-		switch (await getCoin()) {
-			case 1:
-				return await interaction.reply("Head Wins!");
+		try {
+			// throw new Error ("test error");
+			switch (await getCoin()) {
+				case 1:
+					return await interaction.reply("Head Wins!");
 
-			case 2:
-				return await interaction.reply("Tails Wins!");
+				case 2:
+					return await interaction.reply("Tails Wins!");
 
-			default:
-				return await interaction.reply("Value is out of valid range");
+				default:
+					return await interaction.reply("Value is out of valid range");
+			}
+		} catch (error) {
+			console.error("Error while getting coin:", error);
+			await interaction.reply("error with function: getCoin");
 		}
 	}
 
 	if (interaction.commandName === "random-number") {
-		const min = parseInt(interaction.options.getString("min"));
-		const max = parseInt(interaction.options.getString("max"));
+		try {
+			// throw new Error ("test error");
+			const min = parseInt(interaction.options.getString("min"));
+			const max = parseInt(interaction.options.getString("max"));
 
-		if (isNaN(min) || isNaN(max)) {
-			// if user input is not a valid
-			await interaction.reply(
-				"Please provide valid values for both min and max."
-			);
-			return;
+			if (min > max) {
+				return await interaction.reply(
+					"Please provide valid values for both min and max."
+				);
+			}
+
+			const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+			const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
+
+			await interaction.reply(responseMessage);
+		} catch (error) {
+			console.error("error with random-number command", error);
+			await interaction.reply("Error while generating random number");
 		}
-
-		const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
-
-		const responseMessage = `from ${min} | to ${max} | ${randomNumber}`;
-
-		// Reply to the channel with the customized response message
-		await interaction.reply(responseMessage);
 	}
 });
 
