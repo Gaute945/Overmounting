@@ -15,6 +15,9 @@ client.on("ready", async () => {
 	await regAllCmd();
 });
 
+const fetchWeather = require("./commands/weather")
+const returnWeather = require("./commands/weather")
+
 async function regAllCmd() {
 	client.guilds.cache.forEach((guild) => {
 		guild.commands
@@ -40,43 +43,37 @@ client.on("guildCreate", async (guild) => {
 client.on("interactionCreate", async (interaction) => {
 	if (!interaction.isChatInputCommand()) return;
 
-	// do this to every command
+	client.on("interactionCreate", async (interaction) => {
+	if (!interaction.isChatInputCommand()) return;
+
 	if (interaction.commandName === "help") {
-		help();
-	}	
-
-	if (interaction.commandName === "weather") {
-		async function fetchWeather() {
-			try {
-				// throw new Error ("test error");
-				const axios = require("axios");
-				const response = await axios.get(
-					"https://api.open-meteo.com/v1/forecast?latitude=59.92&longitude=5.45&hourly=temperature_2m,precipitation_probability,precipitation&current_weather=true&forecast_days=1&timezone=auto"
-				);
-				return response.data;
-			} catch (error) {
-				console.error("Error while fetching weather:", error);
-				await interaction.reply("error with function: fetchWeather");
-			}
+		try {
+			// throw new Error ("test error");
+			const CommandList = await getCommands(commands);
+			await interaction.reply(CommandList);
+		} catch (error) {
+			console.error("Error while getting commands:", error);
+			await interaction.reply("error with function: getCommands");
 		}
 
-		async function returnWeather() {
-			const weatherData = await fetchWeather();
+		async function getCommands(commands) {
+			let StringCommands = "/";
 			try {
 				// throw new Error ("test error");
-				if (weatherData) {
-					const temperature =
-						Math.round(weatherData.current_weather.temperature) + 4.5;
-					const windSpeed = weatherData.current_weather.windspeed;
-					const responseText = `${temperature} °C, ${windSpeed} km/h`;
-					await interaction.reply(responseText);
+				for (let track = 0; track < commands.length; track++) {
+					StringCommands +=
+						commands[track].name + (track < commands.length - 1 ? " /" : "");
 				}
+				return StringCommands;
 			} catch (error) {
-				console.error("Error while returning weather:", error);
-				await interaction.reply("error with function: returnWeather");
+				throw Error;
 			}
 		}
-
+	}
+});
+	
+	if (interaction.commandName === "weather") {
+		fetchWeather();
 		returnWeather();
 	}
 
