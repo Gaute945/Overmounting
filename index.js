@@ -144,11 +144,21 @@ client.on("interactionCreate", async (interaction) => {
 			await interaction.reply("Error while generating random number");
 		}
 	}
+
+  if (interaction.commandName === "Meeting") {
+    interaction.reply("UWU"); 
+  } 
+  
 });
 
 client.login(process.env.token);
 
 const commands = [
+
+    {
+        name: "Meeting",
+        description: "Plan a meting",
+    },
 	{
 		name: "weather",
 		description: "Current temp and wind for Stord",
