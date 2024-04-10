@@ -145,8 +145,12 @@ client.on("interactionCreate", async (interaction) => {
 		}
 	}
 
-  if (interaction.commandName === "Meeting") {
-    interaction.reply("UWU"); 
+  if (interaction.commandName === "meeting") {
+	try{
+		interaction.reply("UWU"); 
+	}
+	catch(error){}
+    
   } 
   
 });
@@ -156,7 +160,7 @@ client.login(process.env.token);
 const commands = [
 
     {
-        name: "Meeting",
+        name: "meeting",
         description: "Plan a meting",
     },
 	{
