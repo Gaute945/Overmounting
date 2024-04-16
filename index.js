@@ -13,6 +13,18 @@ const client = new Client({
 client.on("ready", async () => {
 	console.log(`I am online and ready as ${client.user.username}`);
 	await regAllCmd();
+
+  // Get the bot-testing channel by name
+  const botTestingChannel = client.channels.cache.find(channel => channel.name === 'bot-testing');
+
+  // Check if the channel is found
+  if (botTestingChannel) {
+    // Send a message in the bot-testing channel
+    botTestingChannel.send('I am now in use!');
+    console.log('Message sent to bot-testing channel.');
+  } else {
+    console.error('Bot-testing channel not found!');
+  }
 });
 
 async function regAllCmd() {
@@ -144,11 +156,47 @@ client.on("interactionCreate", async (interaction) => {
 			await interaction.reply("Error while generating random number");
 		}
 	}
+
+  if (interaction.commandName === "role") {
+    try {
+      const guild = interaction.guild;
+      const name = 'Super Cool Blue People'
+      // Create a new role with data and a reason
+      const role = guild.roles.create({
+        name: name,
+        color: '0000FF',
+        reason: 'made by overmounting',
+      })
+      await interaction.reply("role created");
+    } catch (error) {
+      console.error(error);
+    }
+  }
 });
 
 client.login(process.env.token);
 
+/*
+SUB_COMMAND 1   
+SUB_COMMAND_GROUP 2 
+STRING 3    
+INTEGER 4
+BOOLEAN 5   
+USER 6  
+CHANNEL 7
+ROLE 8  
+MENTIONABLE 9
+NUMBER 10
+ATTACHMENT 11
+*/
+
+// no spaces in name:
+
 const commands = [
+  {
+    name: "role",
+    description: "make and assign your own roles!",
+  },
 	{
 		name: "weather",
 		description: "Current temp and wind for Stord",
