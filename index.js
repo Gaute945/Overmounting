@@ -157,17 +157,34 @@ client.on("interactionCreate", async (interaction) => {
 		}
 	}
 
+  /*
+  White: #FFFFFF
+  Black: #000000
+  Red: #FF0000
+  Green: #00FF00
+  Blue: #0000FF
+  Yellow: #FFFF00
+  Cyan: #00FFFF
+  Magenta: #FF00FF
+  Gray: #808080
+  */
+
   if (interaction.commandName === "role") {
     try {
       const guild = interaction.guild;
-      const name = 'Super Cool Blue People'
-      // Create a new role with data and a reason
-      const role = guild.roles.create({
+      const name = interaction.options.getString("name");
+      const color = interaction.options.getString("color"); 
+
+      const role = await guild.roles.create({
         name: name,
-        color: '0000FF',
+        color: color,
+        position: 1,
         reason: 'made by overmounting',
       })
-      await interaction.reply("role created");
+      interaction.member.roles.add([role.id]);
+      //interaction.reply("Name: "+name+" Color: "+color);
+      interaction.reply("Role Created and Added to User!")
+      //guild.roles.setPositions([{ role: role.id, position: 2 }])
     } catch (error) {
       console.error(error);
     }
@@ -196,6 +213,20 @@ const commands = [
   {
     name: "role",
     description: "make and assign your own roles!",
+    options: [
+      {
+        type: 3,
+        name: "name",
+        description: "The name of the role",
+        required: true,
+      },
+      {
+        type: 3,
+        name: "color",
+        description: "The color of the role in hexadecimal format",
+        required: true,
+      },
+    ],
   },
 	{
 		name: "weather",
