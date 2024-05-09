@@ -173,20 +173,33 @@ client.on("interactionCreate", async (interaction) => {
     try {
       const guild = interaction.guild;
       const name = interaction.options.getString("name");
-      const color = interaction.options.getString("color"); 
+      const color = interaction.options.getString("color");
 
       const role = await guild.roles.create({
         name: name,
         color: color,
-        position: 1,
-        reason: 'made by overmounting',
-      })
-      interaction.member.roles.add([role.id]);
-      //interaction.reply("Name: "+name+" Color: "+color);
-      interaction.reply("Role Created and Added to User!")
-      //guild.roles.setPositions([{ role: role.id, position: 2 }])
+        hoist: true, // Display separately from online members
+        reason: 'Made by Overmounting',
+      });
+
+      const roleId = role.id;
+
+      // Add the role to the user
+      await interaction.member.roles.add(roleId);
+
+      // Get the highest position of all existing roles
+      const highestPosition = guild.roles.highest.position;
+
+      // Set the position of the new role to be lower than the highest existing position
+      const updatedRoleIndex = highestPosition - 1;
+
+      // Update the position of the new role
+      await guild.roles.setPosition(roleId, updatedRoleIndex);
+
+      interaction.reply({ content: "Role Created and Added to User!", ephemeral: true});
     } catch (error) {
       console.error(error);
+      interaction.reply({ content: "Please use hex colors, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
     }
   }
 });
