@@ -174,6 +174,7 @@ client.on("interactionCreate", async (interaction) => {
       const guild = interaction.guild;
       const name = interaction.options.getString("name");
       const color = interaction.options.getString("color");
+      const botMember = await guild.members.fetch(guild.client.user.id);
 
       const role = await guild.roles.create({
         name: name,
@@ -188,7 +189,7 @@ client.on("interactionCreate", async (interaction) => {
       await interaction.member.roles.add(roleId);
 
       // Get the highest position of all existing roles
-      const highestPosition = guild.roles.highest.position;
+      const highestPosition = botMember.roles.highest.position;
 
       // Set the position of the new role to be lower than the highest existing position
       const updatedRoleIndex = highestPosition - 1;
