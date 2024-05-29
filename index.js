@@ -169,6 +169,10 @@ client.on("interactionCreate", async (interaction) => {
   Gray: #808080
   */ 
 
+  /*
+  check for correct color X
+  check if bot has manage roles perms
+  */
   if (interaction.commandName === "role") {
     try {
       const guild = interaction.guild;
@@ -176,12 +180,29 @@ client.on("interactionCreate", async (interaction) => {
       const color = interaction.options.getString("color");
       const botMember = await guild.members.fetch(guild.client.user.id);
 
-      const role = await guild.roles.create({
-        name: name,
-        color: color,
-        hoist: true, // Display separately from online members
-        reason: 'Made by Overmounting',
-      });
+      let role;
+
+      function isHexcodeValid(str) {
+        // Regex to check validlet
+        let regex = new RegExp(/^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+
+        if (regex.test(str) == true) {
+          return "true";
+        }
+        else {
+          return "false";
+        }
+      }
+
+      if (isHexcodeValid(color)) {
+        role = await guild.roles.create({
+          name: name,
+          color: color,
+          hoist: true, // Display separately from online members
+          reason: 'Made by Overmounting',
+        });
+        console.log("color is correct");
+      }
 
       const roleId = role.id;
 
@@ -199,8 +220,17 @@ client.on("interactionCreate", async (interaction) => {
 
       interaction.reply({ content: "Role Created and Added to User!", ephemeral: true});
     } catch (error) {
-      console.error(error);
-      interaction.reply({ content: "Please use hex colors, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
+
+      if (error.code === 'ColorConvert') {
+        interaction.reply({ content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
+        console.error("Invalid hex color provided: ", error);
+      } else if (error.message === 'Missing Permissions') {
+        interaction.reply({ content: "I don't have the 'manage roles' permission, ask a moderator to add it!", ephemeral: false});
+        console.error("Missing 'manage role' permission: ", error);
+      } else {
+        interaction.reply({ content: "An unknown error occurred. Please try again Later.", ephemeral: true});
+        console.error("Unexpected error: ", error, "Error code: ", error.code);
+      }
     }
   }
 });
