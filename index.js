@@ -169,10 +169,8 @@ client.on("interactionCreate", async (interaction) => {
   Gray: #808080
   */ 
 
-  /*
-  check for correct color X
-  check if bot has manage roles perms
-  */
+  const cooldowns = new Map();
+
   if (interaction.commandName === "role") {
     try {
       const guild = interaction.guild;
@@ -194,6 +192,7 @@ client.on("interactionCreate", async (interaction) => {
         }
       }
 
+      // stops the creation of faulty roles
       if (isHexcodeValid(color)) {
         role = await guild.roles.create({
           name: name,
@@ -201,29 +200,23 @@ client.on("interactionCreate", async (interaction) => {
           hoist: true, // Display separately from online members
           reason: 'Made by Overmounting',
         });
-        console.log("color is correct");
       }
 
       const roleId = role.id;
-
-      // Add the role to the user
+      const roleMention = `<@&${role.id}>`;
       await interaction.member.roles.add(roleId);
 
-      // Get the highest position of all existing roles
+      // Get the position of the highest role the bot has
       const highestPosition = botMember.roles.highest.position;
-
-      // Set the position of the new role to be lower than the highest existing position
-      const updatedRoleIndex = highestPosition - 1;
-
-      // Update the position of the new role
+      const updatedRoleIndex = highestPosition - 1; 
       await guild.roles.setPosition(roleId, updatedRoleIndex);
 
       interaction.reply({ content: "Role Created and Added to User!", ephemeral: true});
+      interaction.channel.send(roleMention);
     } catch (error) {
 
       if (error.code === 'ColorConvert') {
         interaction.reply({ content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
-        console.error("Invalid hex color provided: ", error);
       } else if (error.message === 'Missing Permissions') {
         interaction.reply({ content: "I don't have the 'manage roles' permission, ask a moderator to add it!", ephemeral: false});
         console.error("Missing 'manage role' permission: ", error);
