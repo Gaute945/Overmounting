@@ -174,32 +174,54 @@ client.on("interactionCreate", async (interaction) => {
       const guild = interaction.guild;
       const name = interaction.options.getString("name");
       const color = interaction.options.getString("color");
+      const botMember = await guild.members.fetch(guild.client.user.id);
 
-      const role = await guild.roles.create({
-        name: name,
-        color: color,
-        hoist: true, // Display separately from online members
-        reason: 'Made by Overmounting',
-      });
+      let role;
+
+      function isHexcodeValid(str) {
+        // Regex to check validlet
+        let regex = new RegExp(/^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+
+        if (regex.test(str) == true) {
+          return "true";
+        }
+        else {
+          return "false";
+        }
+      }
+
+      // stops the creation of faulty roles
+      if (isHexcodeValid(color)) {
+        role = await guild.roles.create({
+          name: name,
+          color: color,
+          hoist: true, // Display separately from online members
+          reason: 'Made by Overmounting',
+        });
+      }
 
       const roleId = role.id;
-
-      // Add the role to the user
+      const roleMention = `<@&${role.id}>`;
       await interaction.member.roles.add(roleId);
 
-      // Get the highest position of all existing roles
-      const highestPosition = guild.roles.highest.position;
-
-      // Set the position of the new role to be lower than the highest existing position
-      const updatedRoleIndex = highestPosition - 1;
-
-      // Update the position of the new role
+      // Get the position of the highest role the bot has
+      const highestPosition = botMember.roles.highest.position;
+      const updatedRoleIndex = highestPosition - 1; 
       await guild.roles.setPosition(roleId, updatedRoleIndex);
 
       interaction.reply({ content: "Role Created and Added to User!", ephemeral: true});
+      interaction.channel.send(roleMention);
     } catch (error) {
-      console.error(error);
-      interaction.reply({ content: "Please use hex colors, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
+
+      if (error.code === 'ColorConvert') {
+        interaction.reply({ content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
+      } else if (error.message === 'Missing Permissions') {
+        interaction.reply({ content: "I don't have the 'manage roles' permission, ask a moderator to add it!", ephemeral: false});
+        console.error("Missing 'manage role' permission: ", error);
+      } else {
+        interaction.reply({ content: "An unknown error occurred. Please try again Later.", ephemeral: true});
+        console.error("Unexpected error: ", error, "Error code: ", error.code);
+      }
     }
   }
 });
