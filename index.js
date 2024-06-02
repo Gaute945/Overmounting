@@ -169,8 +169,6 @@ client.on("interactionCreate", async (interaction) => {
   Gray: #808080
   */ 
 
-  const cooldowns = new Map();
-
   if (interaction.commandName === "role") {
     try {
       const guild = interaction.guild;
