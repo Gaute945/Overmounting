@@ -12,16 +12,14 @@
 
 - [ ] Bug Fix
 - [ ] New Feature
-- [ ] Code Refactoring
-- [ ] Documentation Update
-- [ ] Other (please specify)
+- [ ] Security Vulnerability
 
 ## Checklist
 
 - [ ] I have tested my changes.
-- [ ] I have updated the documentation.
+- [ ] I have updated the documentation. (if necessary)
 - [ ] My code follows the project's coding style.
-- [ ] I have added/modified relevant tests.
+- [ ] I have added/modified relevant error handling.
 
 ## Screenshots (if applicable)
 
@@ -31,8 +29,8 @@
 
 **Note:**
 
-- Ensure that your code adheres to the [Code Style](#code-style) guidelines mentioned in the contributing documentation.
-- If your pull request addresses an existing issue, reference it in the "Related Issue" section and link it appropriately.
+- Ensure that your code adheres to the [Code Style](#code-style) guidelines mentioned in the [contributing](#) documentation.
+- If your pull request addresses an existing issue, reference it in the "Related Issue" section and [link it](https://docs.github.com/articles/closing-issues-using-keywords) appropriately.
 - If this is a new feature, make sure it follows the [Feature Requests and Contributions](#feature-requests-and-contributions) guidelines.
 - Follow the [How to Contribute](#how-to-contribute) section in the contributing documentation.
 
