@@ -19,7 +19,6 @@ Our project adheres to a specific coding style for consistency. When contributin
 - Indentation: Use 2 spaces for indentation.
 - Semicolons: Always use semicolons to terminate statements.
 - Quotes: Use double quotes for strings.
-- Comments: Use // for single-line comments and /* ... */ for multi-line comments. Ensure comments are meaningful and explain the why, not the what.
 - Line Length: Keep lines to a maximum of 80 characters where possible.
 - Whitespace: Use blank lines to separate logical sections of the code. Avoid trailing whitespace.
 - Error Handling: Always handle errors gracefully and provide meaningful error messages.
