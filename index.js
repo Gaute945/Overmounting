@@ -1,12 +1,13 @@
 require("dotenv").config();
 require("axios");
-const { Client, IntentsBitField } = require("discord.js");
+const { Client, IntentsBitField, } = require("discord.js");
 const client = new Client({
 	intents: [
 		IntentsBitField.Flags.Guilds,
 		IntentsBitField.Flags.GuildMembers,
 		IntentsBitField.Flags.GuildMessages,
 		IntentsBitField.Flags.MessageContent,
+		
 	],
 });
 
@@ -147,9 +148,31 @@ client.on("interactionCreate", async (interaction) => {
 
   if (interaction.commandName === "meeting") {
 	try{
-		interaction.reply("UWU"); 
+
+		var MUsers = (interaction.options.getMentionable("user"));
+	
+		if(MUsers == "1164849801083486298")
+			{
+				interaction.reply("@everyone");
+			}			
+		else{
+			interaction.reply("<@" + MUsers + ">");
+			
+			interaction.channel.send('can you join the meeting').then(sentMessage => {
+				// Unicode emoji
+				sentMessage.react('✅');
+				sentMessage.react('❌');
+			
+			});
+			}
+			
+		//const SUsers = client.users.cache.get(MUsers);
+
+		 
 	}
-	catch(error){}
+	catch(error){
+		console.error(error);
+	}
     
   } 
   
@@ -158,10 +181,20 @@ client.on("interactionCreate", async (interaction) => {
 client.login(process.env.token);
 
 const commands = [
-
+	//dont put uppercase letter in command name♥
     {
         name: "meeting",
         description: "Plan a meting",
+		options:[
+			{
+			type: 3,
+			name: "user",
+				description: "User you want in meeting",
+				type: 9,
+				required: true,
+				
+			}
+		]
     },
 	{
 		name: "weather",
