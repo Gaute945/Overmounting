@@ -150,59 +150,53 @@ client.on("interactionCreate", async (interaction) => {
   if (interaction.commandName === "meeting") {
 	try{
 
-		var MUsers = (interaction.options.getUser("user"));
-		var MUsers2 = (interaction.options.getUser("user2")) ?? "";
-		var MUsers3 = (interaction.options.getUser("user3")) ?? "";
-		var MUsers4 = (interaction.options.getUser("user4")) ?? "";
-		var MUsers5 = (interaction.options.getUser("user5")) ?? "";
-		var MUsers6 = (interaction.options.getUser("user6")) ?? "";
-		var MUsers7 = (interaction.options.getUser("user7")) ?? "";
-		var MUsers8 = (interaction.options.getUser("user8")) ?? "";
-		var MUsers9 = (interaction.options.getUser("user9")) ?? "";
-		var MUsers10 = (interaction.options.getUser("user10")) ?? "";
-		var MUList = [MUsers2,MUsers3,MUsers4,MUsers5,MUsers6,MUsers7,MUsers8,MUsers9,MUsers10]
+		const MRequiredUser = (interaction.options.getUser("user"));
+		const MUsers = [];
+		const MUList = ["user2","user3","user4","user5","user6","user7","user8","user9","user10"];
+		const MAll = (interaction.options.getBoolean("all")) ?? false;
+		const MHour = (interaction.options.getNumber("hour"));
+		const MMin = (interaction.options.getNumber("min"));
+		const MDay = (interaction.options.getNumber("day"));
+		const MMonth = (interaction.options.getString("month"));
+		let MReply ="";
 
-		var MAll = (interaction.options.getBoolean("all")) ?? false;
-		var MHour = (interaction.options.getNumber("hour"));
-		var MMin = (interaction.options.getNumber("min"));
-		var MDay = (interaction.options.getNumber("day"));
-		var MMonth = (interaction.options.getString("month"));
-		var MReply ="";
-		if (MAll == true)
-			{
+		for(i = 0; i < 9; i++) {
+			MUsers[i] = (interaction.options.getUser(MUList[i])) ?? ""; 
+		}
+
+		if (MAll == true) {
 				if (interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.MentionEveryone)) {
-					
 					MReply += "@everyone ";
 				}
 				else {
-					MReply += "mising permissions ";
+					MReply += "mising permissions to mention everyone ";
+				}
+		}
+		else {
+			MReply += "<@" + MRequiredUser + "> ";
+				
+			for(i = 0; i < 9; i++)
+			{
+				if(MUsers[i] != "") {
+					MReply += "<@" + MUsers[i] + ">";
 				}
 			}
-			else {
-				MReply += "<@" +MUsers + "> ";
-				
-				for(i = 0; i < 9;i++) {
-						if(MUList[i] != "") {
-								MReply += "<@" + MUList[i] + "> ";
-							}
-					}
-			}
-			await interaction.reply({
-				content: MReply,
-				allowedMentions: { parse: ['everyone', 'users'] },
-			});
+		}
+
+		await interaction.reply({
+			content: MReply,
+			allowedMentions: { parse: ['everyone', 'users'] },
+		});
 			
-			interaction.channel.send(' can you join the meeting at '+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
-				sentMessage.react('✅');
-				sentMessage.react('❌');		
-			});
-		
+		interaction.channel.send(' can you join the meeting at '+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
+			sentMessage.react('✅');
+			sentMessage.react('❌');		
+		});
 	}
 	catch(error){
 		console.error(error);
 	}
-  } 
-  
+  }
 });
 
 client.login(process.env.token);
