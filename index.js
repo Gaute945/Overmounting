@@ -1,7 +1,8 @@
 require("dotenv").config();
 require("axios");
-const { Client, IntentsBitField, } = require("discord.js");
+const { Client, IntentsBitField, PermissionsBitField } = require("discord.js");
 const client = new Client({
+	
 	intents: [
 		IntentsBitField.Flags.Guilds,
 		IntentsBitField.Flags.GuildMembers,
@@ -167,36 +168,39 @@ client.on("interactionCreate", async (interaction) => {
 		var MDay = (interaction.options.getNumber("day"));
 		var MMonth = (interaction.options.getString("month"));
 		var MReply ="";
-		if(MAll == true)
+		if (MAll == true)
 			{
-				MReply += "@everyone ";
-			}
-				MReply += "<@" +MUsers + "> ";
-			for(i = 0; i < 9;i++)
-				{
-					if(MUList[i] != "")
-						{
-							MReply += "<@" + MUList[i] + "> "
-						}
+				if (interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.MentionEveryone)) {
+					
+					MReply += "@everyone ";
 				}
-			await interaction.reply(MReply);
-			
-			interaction.channel.send(' can you join the meeting at '+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
-				// Unicode emoji
-				sentMessage.react('✅');
-				sentMessage.react('❌');
-			
+				else {
+					MReply += "mising permissions ";
+				}
+			}
+			else {
+				MReply += "<@" +MUsers + "> ";
+				
+				for(i = 0; i < 9;i++) {
+						if(MUList[i] != "") {
+								MReply += "<@" + MUList[i] + "> ";
+							}
+					}
+			}
+			await interaction.reply({
+				content: MReply,
+				allowedMentions: { parse: ['everyone', 'users'] },
 			});
 			
-			
-		//const SUsers = client.users.cache.get(MUsers);
-
-		 
+			interaction.channel.send(' can you join the meeting at '+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
+				sentMessage.react('✅');
+				sentMessage.react('❌');		
+			});
+		
 	}
 	catch(error){
 		console.error(error);
 	}
-    
   } 
   
 });
