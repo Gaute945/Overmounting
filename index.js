@@ -147,56 +147,64 @@ client.on("interactionCreate", async (interaction) => {
 		}
 	}
 
-  if (interaction.commandName === "meeting") {
-	try{
+  	if (interaction.commandName === "meeting") {
+		try {
 
-		const MRequiredUser = (interaction.options.getUser("user"));
-		const MUsers = [];
-		const MUList = ["user2","user3","user4","user5","user6","user7","user8","user9","user10"];
-		const MAll = (interaction.options.getBoolean("all")) ?? false;
-		const MHour = (interaction.options.getNumber("hour"));
-		const MMin = (interaction.options.getNumber("min"));
-		const MDay = (interaction.options.getNumber("day"));
-		const MMonth = (interaction.options.getString("month"));
-		let MReply ="";
-
-		for(i = 0; i < 9; i++) {
-			MUsers[i] = (interaction.options.getUser(MUList[i])) ?? ""; 
-		}
-
-		if (MAll == true) {
-				if (interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.MentionEveryone)) {
-					MReply += "@everyone ";
-				}
-				else {
-					MReply += "mising permissions to mention everyone ";
-				}
-		}
-		else {
-			MReply += "<@" + MRequiredUser + "> ";
-				
-			for(i = 0; i < 9; i++)
-			{
-				if(MUsers[i] != "") {
-					MReply += "<@" + MUsers[i] + ">";
-				}
+			const MAll = (interaction.options.getBoolean("all")) ?? false;
+			const MHour = (interaction.options.getNumber("hour"));
+			const MMin = (interaction.options.getNumber("min"));
+			const MDay = (interaction.options.getNumber("day"));
+			const MMonth = (interaction.options.getString("month"));
+			let MReply ="";
+	
+			if (MAll == true) {
+					if (interaction.guild.members.me.permissions.has(PermissionsBitField.Flags.MentionEveryone)) {
+						MReply = "@everyone ";
+					}
+					else {
+						MReply = "mising permissions to mention everyone ";
+					}
 			}
-		}
+			else {
+				MReply += await makeReply();
+			}
 
-		await interaction.reply({
-			content: MReply,
-			allowedMentions: { parse: ['everyone', 'users'] },
-		});
+			async function makeReply()
+			{
+				const MRequiredUser = (interaction.options.getUser("user"));
+				let Reply ="";
+				Reply += "<@" + MRequiredUser + "> ";
+				MUsers = await getUsers();
+				for(i = 2; i < 11; i++) {
+					if(MUsers[i] != "") {
+						Reply += "<@" + MUsers[i] + ">";
+					}
+				}
+				return Reply;
+			}
+
+			async function getUsers(){
+				const Users = [];
+				for(i = 2; i < 11; i++) {
+					Users[i] = (interaction.options.getUser("user" + i)) ?? "";
+				}
+				return Users;
+			}
+
+			await interaction.reply({
+				content: MReply,
+				allowedMentions: { parse: ['everyone', 'users'] },
+			});
 			
-		interaction.channel.send(' can you join the meeting at '+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
-			sentMessage.react('✅');
-			sentMessage.react('❌');		
-		});
-	}
-	catch(error){
-		console.error(error);
-	}
-  }
+			interaction.channel.send(' can you join the meeting at '+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
+				sentMessage.react('✅');
+				sentMessage.react('❌');
+			});
+		}
+		catch(error){
+			console.error(error);
+		}
+  	}
 });
 
 client.login(process.env.token);
