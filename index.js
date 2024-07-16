@@ -2,44 +2,56 @@ require("dotenv").config();
 require("axios");
 const { Client, IntentsBitField, PermissionsBitField } = require("discord.js");
 const client = new Client({
-	
+
 	intents: [
 		IntentsBitField.Flags.Guilds,
 		IntentsBitField.Flags.GuildMembers,
 		IntentsBitField.Flags.GuildMessages,
 		IntentsBitField.Flags.MessageContent,
-		
 	],
 });
 
 client.on("ready", async () => {
-	console.log(`I am online and ready as ${client.user.username}`);
-	await regAllCmd();
+  console.log(`I am online and ready as ${client.user.username}`);
+  await regAllCmd();
+
+  // Get the bot-testing channel by name
+  const botTestingChannel = client.channels.cache.find(channel => channel.name === 'bot-testing');
+
+  // Check if the channel is found
+  if (botTestingChannel) {
+    // Send a message in the bot-testing channel
+    botTestingChannel.send('I am now in use!');
+    console.log('Message sent to bot-testing channel.');
+  } else {
+    console.error('Bot-testing channel not found!');
+  }
 });
 
 async function regAllCmd() {
-	client.guilds.cache.forEach((guild) => {
-		guild.commands
-			.set(commands)
-			.then(() => {
-				// throw new Error ("test error");
-				console.log(`Commands deployed in ${guild.name} successfully!`);
-			})
-			.catch((error) => {
-				console.error(
-					`Error deploying commands in ${guild.name}: ${error.message}`
-				);
-			});
-	});
+  client.guilds.cache.forEach((guild) => {
+    guild.commands
+      .set(commands)
+      .then(() => {
+        // throw new Error ("test error");
+        console.log(`Commands deployed in ${guild.name} successfully!`);
+      })
+      .catch((error) => {
+        console.error(
+          `Error deploying commands in ${guild.name}: ${error.message}`
+        );
+      });
+  });
 }
 
 client.on("guildCreate", async (guild) => {
-	guild.commands
-		.set(commands)
-		.then(() => console.log(`Bot added to the guild ${guild.name}!`));
+  guild.commands
+    .set(commands)
+    .then(() => console.log(`Bot added to the guild ${guild.name}!`));
 });
 
 client.on("interactionCreate", async (interaction) => {
+
 	if (!interaction.isChatInputCommand()) return;
 
 	if (interaction.commandName === "help") {
@@ -206,9 +218,93 @@ client.on("interactionCreate", async (interaction) => {
 			console.error(error);
 		}
   	}
+
+  /*
+  White: #FFFFFF
+  Black: #000000
+  Red: #FF0000
+  Green: #00FF00
+  Blue: #0000FF
+  Yellow: #FFFF00
+  Cyan: #00FFFF
+  Magenta: #FF00FF
+  Gray: #808080
+  */ 
+
+  if (interaction.commandName === "role") {
+    try {
+      const guild = interaction.guild;
+      const name = interaction.options.getString("name");
+      const color = interaction.options.getString("color");
+      const botMember = await guild.members.fetch(guild.client.user.id);
+
+      let role;
+
+      function isHexcodeValid(str) {
+        // Regex to check validlet
+        let regex = new RegExp(/^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/);
+
+        if (regex.test(str) == true) {
+          return "true";
+        }
+        else {
+          return "false";
+        }
+      }
+
+      // stops the creation of faulty roles
+      if (isHexcodeValid(color)) {
+        role = await guild.roles.create({
+          name: name,
+          color: color,
+          hoist: true, // Display separately from online members
+          reason: 'Made by Overmounting',
+        });
+      }
+
+      const roleId = role.id;
+      const roleMention = `<@&${role.id}>`;
+      await interaction.member.roles.add(roleId);
+
+      // Get the position of the highest role the bot has
+      const highestPosition = botMember.roles.highest.position;
+      const updatedRoleIndex = highestPosition - 1; 
+      await guild.roles.setPosition(roleId, updatedRoleIndex);
+
+      interaction.reply({ content: "Role Created and Added to User!", ephemeral: true});
+      interaction.channel.send(roleMention);
+    } catch (error) {
+
+      if (error.code === 'ColorConvert') {
+        interaction.reply({ content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
+      } else if (error.message === 'Missing Permissions') {
+        interaction.reply({ content: "I don't have the 'manage roles' permission, ask a moderator to add it!", ephemeral: false});
+        console.error("Missing 'manage role' permission: ", error);
+      } else {
+        interaction.reply({ content: "An unknown error occurred. Please try again Later.", ephemeral: true});
+        console.error("Unexpected error: ", error, "Error code: ", error.code);
+      }
+    }
+  }
 });
 
 client.login(process.env.token);
+
+/*
+SUB_COMMAND 1   
+SUB_COMMAND_GROUP 2 
+STRING 3    
+INTEGER 4
+BOOLEAN 5   
+USER 6  
+CHANNEL 7
+ROLE 8  
+MENTIONABLE 9
+NUMBER 10
+ATTACHMENT 11
+*/
+
+// no spaces in name:
 
 const commands = [
 	//dont put uppercase letter in command name♥
@@ -542,4 +638,23 @@ const commands = [
 		name: "help",
 		description: "says all the commands",
 	},
+
+  {
+    name: "role",
+    description: "make and assign your own roles!",
+    options: [
+      {
+        type: 3,
+        name: "name",
+        description: "The name of the role",
+        required: true,
+      },
+      {
+        type: 3,
+        name: "color",
+        description: "The color of the role in hexadecimal format",
+        required: true,
+      },
+    ],
+  },
 ];

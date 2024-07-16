@@ -25,5 +25,5 @@ assignees: ''
 
 **Note:**
 
-- If you are planning to work on this feature, please comment on this issue to express your interest.
-- Follow the [Feature Requests and Contributions](#feature-requests-and-contributions) guidelines in the contributing documentation before submitting your proposal.
+- If you are planning to work on fixing this feature request, please assign yourself or comment on this issue to be assigned.
+- Follow the [feature-requests-and-contributions](https://github.com/Gaute945/Overmounting/blob/50-docupdate/docs/CONTRIBUTING.md#feature-requests-and-contributions) guidelines in the contributing documentation before submitting your bug report.
