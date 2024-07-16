@@ -175,6 +175,7 @@ client.on("interactionCreate", async (interaction) => {
 				let Reply ="";
 				Reply += "<@" + MRequiredUser + "> ";
 				MUsers = await getUsers();
+				
 				for(i = 2; i < 11; i++) {
 					if(MUsers[i] != "") {
 						Reply += "<@" + MUsers[i] + ">";
