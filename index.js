@@ -308,10 +308,10 @@ ATTACHMENT 11
 
 const commands = [
 	//dont put uppercase letter in command name♥
-    {
-        name: "meeting",
-        description: "Plan a meting",
-		options:[
+	{
+		name: "meeting",
+		description: "Plan a meting",
+		options: [
 			{
 				name: "hour",
 				type: 10,
@@ -367,247 +367,247 @@ const commands = [
 						"value": "12"
 					},
 					{
-                		"name": "11",
-                		"value": "11"
-                	},
-                	{
-                    	"name": "10",
-                    	"value": "10"
-                	},
-                	{
-                    	"name": "09",
-                    	"value": "09"
-                	},
-                	{
-                    	"name": "08",
-                    	"value": "08"
-                	},
+						"name": "11",
+						"value": "11"
+					},
 					{
-                    	"name": "07",
-                    	"value": "07"
-                	},
+						"name": "10",
+						"value": "10"
+					},
 					{
-                    	"name": "06",
-                    	"value": "06"
-                	},
+						"name": "09",
+						"value": "09"
+					},
 					{
-                    	"name": "05",
-                    	"value": "05"
-                	},
+						"name": "08",
+						"value": "08"
+					},
 					{
-                    	"name": "04",
-                    	"value": "04"
-                	},
+						"name": "07",
+						"value": "07"
+					},
 					{
-                    	"name": "03",
-                    	"value": "03"
-                	},
+						"name": "06",
+						"value": "06"
+					},
 					{
-                	    "name": "02",
-                	    "value": "02"
-                	},
+						"name": "05",
+						"value": "05"
+					},
 					{
-                	    "name": "01",
-                	    "value": "01"
-                	},
+						"name": "04",
+						"value": "04"
+					},
 					{
-                    	"name": "00",
-                    	"value": "00"
-               		}
-            	]
-				
-	},
-	{
-	name: "min",
-	description: "the minits of your meeting",
-	type: 10,
-	required: true,			
-	"choices": [
-		{
-			"name": "59",
-			"value": "59"
-		},
-		{
-			"name": "55",
-			"value": "55"
-		},
-		{
-			"name": "50",
-			"value": "50"
-		},
-		{
-			"name": "45",
-			"value": "45"
-		},
-		{
-			"name": "40",
-			"value": "40"
-		},
-		{
-			"name": "35",
-			"value": "35"
-		},
-		{
-			"name": "30",
-			"value": "30"
-		},
-		{
-			"name": "25",
-			"value": "25"
-		},
-		{
-			"name": "20",
-			"value": "20"
-		},
-		{
-			"name": "15",
-			"value": "15"
-		},
-		{
-			"name": "10",
-			"value": "10"
-		},
-		{
-			"name": "5",
-			"value": "5"
-		},
-		{
-			"name": "00",
-			"value": "00"
-		}
-		]
-	},
-	{
-		name: "day",
-		description: "the day of your meeting",
-		type: 10,
-		required: true,			
-		max_value: 31,
-	},
-	{
-		name: "month",
-		description: "the day of your meeting",
-		type: 3,
-		required: true,			
-		"choices": [
-			{
-				"name": "January",
-				"value": "January"
+						"name": "03",
+						"value": "03"
+					},
+					{
+						"name": "02",
+						"value": "02"
+					},
+					{
+						"name": "01",
+						"value": "01"
+					},
+					{
+						"name": "00",
+						"value": "00"
+					}
+				]
+
 			},
 			{
-				"name": "February",
-				"value": "February"
+				name: "min",
+				description: "the minits of your meeting",
+				type: 10,
+				required: true,
+				"choices": [
+					{
+						"name": "59",
+						"value": "59"
+					},
+					{
+						"name": "55",
+						"value": "55"
+					},
+					{
+						"name": "50",
+						"value": "50"
+					},
+					{
+						"name": "45",
+						"value": "45"
+					},
+					{
+						"name": "40",
+						"value": "40"
+					},
+					{
+						"name": "35",
+						"value": "35"
+					},
+					{
+						"name": "30",
+						"value": "30"
+					},
+					{
+						"name": "25",
+						"value": "25"
+					},
+					{
+						"name": "20",
+						"value": "20"
+					},
+					{
+						"name": "15",
+						"value": "15"
+					},
+					{
+						"name": "10",
+						"value": "10"
+					},
+					{
+						"name": "5",
+						"value": "5"
+					},
+					{
+						"name": "00",
+						"value": "00"
+					}
+				]
 			},
 			{
-				"name": "March",
-				"value": "March"
+				name: "day",
+				description: "the day of your meeting",
+				type: 10,
+				required: true,
+				max_value: 31,
 			},
 			{
-				"name": "April",
-				"value": "April"
+				name: "month",
+				description: "the day of your meeting",
+				type: 3,
+				required: true,
+				"choices": [
+					{
+						"name": "January",
+						"value": "January"
+					},
+					{
+						"name": "February",
+						"value": "February"
+					},
+					{
+						"name": "March",
+						"value": "March"
+					},
+					{
+						"name": "April",
+						"value": "April"
+					},
+					{
+						"name": "May",
+						"value": "May"
+					},
+					{
+						"name": "June",
+						"value": "June"
+					},
+					{
+						"name": "July",
+						"value": "July"
+					},
+					{
+						"name": "August",
+						"value": "August"
+					},
+					{
+						"name": "September",
+						"value": "September"
+					},
+					{
+						"name": "October",
+						"value": "October"
+					},
+					{
+						"name": "November",
+						"value": "November"
+					},
+					{
+						"name": "December",
+						"value": "December"
+					},
+				]
 			},
 			{
-				"name": "May",
-				"value": "May"
+				name: "user",
+				description: "User you want in meeting",
+				type: 6,
+				required: true,
 			},
 			{
-				"name": "June",
-				"value": "June"
-			},
-			{
-				"name": "July",
-				"value": "July"
-			},
-			{
-				"name": "August",
-				"value": "August"
-			},
-			{
-				"name": "September",
-				"value": "September"
-			},
-			{
-				"name": "October",
-				"value": "October"
-			},
-			{
-				"name": "November",
-				"value": "November"
-			},
-			{
-				"name": "December",
-				"value": "December"
-			},
-			]
-		},
-		{
-			name: "user",
-			description: "User you want in meeting",
-			type: 6,
-			required: true,
-		},
-		{
-			name: "user2",
-			type: 6,
-			description: "User you want in meeting",
-			required: false,
-		},
-		{
-			name: "user3",
-			type: 6,
-			description: "User you want in meeting",
-			required: false,
-		},
-		{
-			name: "user4",
-			type: 6,
-			description: "User you want in meeting",
-			required: false,
-		},
-		{
-			name: "user5",
-			type: 6,
-			description: "User you want in meeting",
-			required: false,
-		},
-		{
-			name: "user6",
-			type: 6,
-			description: "User you want in meeting",
-			required: false,	
-		},
-		{
-			name: "user7",
-			type: 6,
+				name: "user2",
+				type: 6,
 				description: "User you want in meeting",
 				required: false,
-		},
-		{
-			name: "user8",
-			type: 6,
+			},
+			{
+				name: "user3",
+				type: 6,
 				description: "User you want in meeting",
 				required: false,
-		},
-		{
-			name: "user9",
-			type: 6,
+			},
+			{
+				name: "user4",
+				type: 6,
 				description: "User you want in meeting",
 				required: false,
-		},
-		{
-			name: "user10",
-			type: 6,
+			},
+			{
+				name: "user5",
+				type: 6,
 				description: "User you want in meeting",
 				required: false,
-		},
-		{
-			type: 5,
-			name: "all",
+			},
+			{
+				name: "user6",
+				type: 6,
+				description: "User you want in meeting",
+				required: false,
+			},
+			{
+				name: "user7",
+				type: 6,
+				description: "User you want in meeting",
+				required: false,
+			},
+			{
+				name: "user8",
+				type: 6,
+				description: "User you want in meeting",
+				required: false,
+			},
+			{
+				name: "user9",
+				type: 6,
+				description: "User you want in meeting",
+				required: false,
+			},
+			{
+				name: "user10",
+				type: 6,
+				description: "User you want in meeting",
+				required: false,
+			},
+			{
+				type: 5,
+				name: "all",
 				description: "do you want everyone in the meeting?",
-				required: false,	
-		}
+				required: false,
+			}
 		]
-    },
+	},
 	{
 		name: "weather",
 		description: "Current temp and wind for Stord",
