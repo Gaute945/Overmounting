@@ -3,21 +3,19 @@ const { SlashCommandBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('role')
-		.setDescription('make and assign your own roles!'),
-    options: [
-        {
-          type: 3,
-          name: "name",
-          description: "The name of the role",
-          required: true,
-        },
-        {
-          type: 3,
-          name: "color",
-          description: "The color of the role in hexadecimal format",
-          required: true,
-        },
-      ],
+		.setDescription('make and assign your own roles!')
+    .addStringOption(option =>
+      option.setName('name')
+        .setDescription('The name of the role')
+        .setRequired(true)
+    )
+
+    .addStringOption(option =>
+      option.setName('color')
+        .setDescription('The color of the role in hexadecimal format')
+        .setRequired(true)
+    ),
+
 	async execute(interaction) {
     try {
       const guild = interaction.guild;
