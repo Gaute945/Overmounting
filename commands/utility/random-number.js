@@ -2,27 +2,25 @@ const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('random-number')
-  .setDescription('random number min-max'),
-  options: [
-    {
-      type: 3,
-      name: "min",
-      description: "The minimum value",
-      required: true,
-    },
-    {
-      type: 3,
-      name: "max",
-      description: "The maximum value",
-      required: true,
-    },
-  ],
+    .setName('random-number')
+    .setDescription('random number min-max')
+    .addIntegerOption(option =>
+      option.setName('min')
+        .setDescription('The minimum value')
+        .setRequired(true)
+    )
+
+    .addIntegerOption(option =>
+      option.setName('max')
+        .setDescription('The maximum value')
+        .setRequired(true)
+    ),
+
   async execute(interaction) {
     try {
       // throw new Error ("test error");
-      const min = parseInt(interaction.options.getString("min"));
-      const max = parseInt(interaction.options.getString("max"));
+      const min = parseInt(interaction.options.getInteger("min"));
+      const max = parseInt(interaction.options.getInteger("max"));
 
       if (min > max) {
         return await interaction.reply(
@@ -40,3 +38,4 @@ module.exports = {
     }
   },
 };
+

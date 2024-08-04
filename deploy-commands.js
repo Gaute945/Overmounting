@@ -8,9 +8,6 @@ const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const APP_ID = process.env.APP_ID;
 const guildID = process.env.guildID;
 
-console.log(process.env.DISCORD_TOKEN);
-console.log(process.env.APP_ID);
-
 const commands = [];
 // Grab all the command folders from the commands directory you created earlier
 const foldersPath = path.join(__dirname, 'commands');
