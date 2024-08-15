@@ -1,15 +1,16 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-  .setName('weather')
-  .setDescription('Current temp and wind for Stord'),
+    .setName("weather")
+    .setDescription("Current temp and wind for Stord"),
   async execute(interaction) {
     async function fetchWeather() {
       try {
         // throw new Error ("test error");
         const axios = require("axios");
         const response = await axios.get(
+          // cannot shorten api url
           "https://api.open-meteo.com/v1/forecast?latitude=59.92&longitude=5.45&hourly=temperature_2m,precipitation_probability,precipitation&current_weather=true&forecast_days=1&timezone=auto"
         );
         return response.data;
@@ -37,5 +38,5 @@ module.exports = {
     }
 
     returnWeather();
-  },
+  }
 };

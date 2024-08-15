@@ -1,22 +1,22 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('role')
-		.setDescription('make and assign your own roles!')
+  data: new SlashCommandBuilder()
+    .setName("role")
+    .setDescription("make and assign your own roles!")
     .addStringOption(option =>
-      option.setName('name')
-        .setDescription('The name of the role')
+      option.setName("name")
+        .setDescription("The name of the role")
         .setRequired(true)
     )
 
     .addStringOption(option =>
-      option.setName('color')
-        .setDescription('The color of the role in hexadecimal format')
+      option.setName("color")
+        .setDescription("The color of the role in hexadecimal format")
         .setRequired(true)
     ),
 
-	async execute(interaction) {
+  async execute(interaction) {
     try {
       const guild = interaction.guild;
       const name = interaction.options.getString("name");
@@ -43,7 +43,7 @@ module.exports = {
           name: name,
           color: color,
           hoist: true, // Display separately from online members
-          reason: 'Made by Overmounting',
+          reason: "Made by Overmounting"
         });
       }
 
@@ -53,22 +53,26 @@ module.exports = {
 
       // Get the position of the highest role the bot has
       const highestPosition = botMember.roles.highest.position;
-      const updatedRoleIndex = highestPosition - 1; 
+      const updatedRoleIndex = highestPosition - 1;
       await guild.roles.setPosition(roleId, updatedRoleIndex);
 
-      interaction.reply({ content: "Role Created and Added to User!", ephemeral: true});
+      interaction.reply({
+        content: "Role Created and Added to User!", ephemeral: true});
       interaction.channel.send(roleMention);
     } catch (error) {
-
-      if (error.code === 'ColorConvert') {
+      if (error.code === "ColorConvert") {
         interaction.reply({ content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
-      } else if (error.message === 'Missing Permissions') {
-        interaction.reply({ content: "I don't have the 'manage roles' permission, ask a moderator to add it!", ephemeral: false});
+      } else if (error.message === "Missing Permissions") {
+        interaction.reply({
+          content: "I don't have the 'manage roles' permission, ask a moderator to add it!",
+          ephemeral: false});
         console.error("Missing 'manage role' permission: ", error);
       } else {
-        interaction.reply({ content: "An unknown error occurred. Please try again Later.", ephemeral: true});
+        interaction.reply({
+          content: "An unknown error occurred. Please try again Later.",
+          ephemeral: true});
         console.error("Unexpected error: ", error, "Error code: ", error.code);
       }
     }
-  },
+  }
 };

@@ -1,18 +1,18 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('random-number')
-    .setDescription('random number min-max')
+    .setName("random-number")
+    .setDescription("random number min-max")
     .addIntegerOption(option =>
-      option.setName('min')
-        .setDescription('The minimum value')
+      option.setName("min")
+        .setDescription("The minimum value")
         .setRequired(true)
     )
 
     .addIntegerOption(option =>
-      option.setName('max')
-        .setDescription('The maximum value')
+      option.setName("max")
+        .setDescription("The maximum value")
         .setRequired(true)
     ),
 
@@ -36,6 +36,6 @@ module.exports = {
       console.error("error with random-number command", error);
       await interaction.reply("Error while generating random number");
     }
-  },
+  }
 };
 
