@@ -5,6 +5,9 @@
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "depcheck": "^1.4.7"
+    "@eslint/js": "^9.9.0",
+    "depcheck": "^1.4.7",
+    "eslint": "^9.9.0",
+    "globals": "^15.9.0"
   }
 }
