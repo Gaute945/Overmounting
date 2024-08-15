@@ -142,41 +142,47 @@ module.exports = {
     ),
   async execute(interaction) {
     try {
-      const MAll = interaction.options.getBoolean("all") ?? false;
-      const MHour = interaction.options.getNumber("hour");
-      const MMin = interaction.options.getNumber("min");
-      const MDay = interaction.options.getNumber("day");
-      const MMonth = interaction.options.getString("month");
-      let MReply = "";
+      const MAll = (interaction.options.getBoolean("all")) ?? false;
+      const MHour = (interaction.options.getNumber("hour"));
+      const MMin = (interaction.options.getNumber("min"));
+      const MDay = (interaction.options.getNumber("day"));
+      const MMonth = (interaction.options.getString("month"));
+      let MReply ="";
+      let i;
+      let MUsers;
 
-      if (MAll) {
+      if (MAll == true) {
         if (interaction.guild.members.me.permissions.has(
           PermissionsBitField.Flags.MentionEveryone)) {
           MReply = "@everyone ";
-        } else {
-          MReply = "Missing permissions to mention everyone ";
         }
-      } else {
+        else {
+          MReply = "mising permissions to mention everyone ";
+        }
+      }
+      else {
         MReply += await makeReply();
       }
 
-      async function makeReply() {
-        const MRequiredUser = interaction.options.getUser("user");
-        let Reply = `<@${MRequiredUser.id}> `;
-        const MUsers = await getUsers();
+      async function makeReply()
+      {
+        const MRequiredUser = (interaction.options.getUser("user"));
+        let Reply ="";
+        Reply += "<@" + MRequiredUser + "> ";
+        MUsers = await getUsers();
 
-        for (let i = 2; i <= 11; i++) {
-          if (MUsers[i]) {
-            Reply += `<@${MUsers[i].id}> `;
+        for(i = 2; i < 11; i++) {
+          if(MUsers[i] != "") {
+            Reply += "<@" + MUsers[i] + ">";
           }
         }
         return Reply;
       }
 
-      async function getUsers() {
+      async function getUsers(){
         const Users = [];
-        for (let i = 2; i <= 11; i++) {
-          Users[i] = interaction.options.getUser(`user${i}`) || null;
+        for(i = 2; i < 11; i++) {
+          Users[i] = (interaction.options.getUser("user" + i)) ?? "";
         }
         return Users;
       }
@@ -186,12 +192,10 @@ module.exports = {
         allowedMentions: { parse: ["everyone", "users"] }
       });
 
-      interaction.channel.send(
-        `Join the meeting at ${MHour}:${MMin} on ${MDay} ${MMonth}?`).then(
-        sentMessage => {
-          sentMessage.react("✅");
-          sentMessage.react("❌");
-        });
+      interaction.channel.send(" can you join the meeting at "+ MHour + ":"+ MMin + " " + MDay + " " + MMonth).then(sentMessage => {
+        sentMessage.react("✅");
+        sentMessage.react("❌");
+      });
     } catch (error) {
       console.error(error);
     }
