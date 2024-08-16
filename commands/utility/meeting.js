@@ -3,27 +3,7 @@ const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("meeting")
-    .setDescription("Plan a meeting")
-
-    .addNumberOption(option =>
-      option.setName("min")
-        .setDescription("The minutes of your meeting (0-55) in 5-minute increments")
-        .setRequired(true)
-        .addChoices(
-          { name: "00", value: 0 },
-          { name: "05", value: 5 },
-          { name: "10", value: 10 },
-          { name: "15", value: 15 },
-          { name: "20", value: 20 },
-          { name: "25", value: 25 },
-          { name: "30", value: 30 },
-          { name: "35", value: 35 },
-          { name: "40", value: 40 },
-          { name: "45", value: 45 },
-          { name: "50", value: 50 },
-          { name: "55", value: 55 }
-        )
-    )
+    .setDescription("Plan a meeting") 
 
     .addNumberOption(option =>
       option.setName("hour")
@@ -54,6 +34,26 @@ module.exports = {
           { name: "21", value: 21 },
           { name: "22", value: 22 },
           { name: "23", value: 23 }
+        )
+    )
+
+    .addNumberOption(option =>
+      option.setName("min")
+        .setDescription("The minutes of your meeting (0-55) in 5-minute increments")
+        .setRequired(true)
+        .addChoices(
+          { name: "00", value: 0 },
+          { name: "05", value: 5 },
+          { name: "10", value: 10 },
+          { name: "15", value: 15 },
+          { name: "20", value: 20 },
+          { name: "25", value: 25 },
+          { name: "30", value: 30 },
+          { name: "35", value: 35 },
+          { name: "40", value: 40 },
+          { name: "45", value: 45 },
+          { name: "50", value: 50 },
+          { name: "55", value: 55 }
         )
     )
 
