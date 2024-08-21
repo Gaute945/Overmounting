@@ -61,17 +61,28 @@ module.exports = {
       interaction.channel.send(roleMention);
     } catch (error) {
       if (error.code === "ColorConvert") {
-        interaction.reply({ content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", ephemeral: true});
+        interaction.reply({ 
+          content: "Please use a valid hex color, like: White: #FFFFFF Black: #000000 Red: #FF0000 Green: #00FF00 Blue: #0000FF Yellow: #FFFF00 Cyan: #00FFFF Magenta: #FF00FF Gray: #808080", 
+          ephemeral: true
+        });
+      
       } else if (error.message === "Missing Permissions") {
         interaction.reply({
           content: "I don't have the 'manage roles' permission, ask a moderator to add it!",
-          ephemeral: false});
-        console.error("Missing 'manage role' permission: ", error);
+          ephemeral: false
+        });
+      
+      } else if (error.code === 50035) { // Must be 100 or fewer in length.
+        interaction.reply({
+          content: "Role name must be 100 or fewer in length.",
+          ephemeral: true
+        });
+      
       } else {
         interaction.reply({
           content: "An unknown error occurred. Please try again Later.",
           ephemeral: true});
-        console.error("Unexpected error: ", error, "Error code: ", error.code);
+        console.error(error.code);
       }
     }
   }

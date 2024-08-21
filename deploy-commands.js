@@ -24,7 +24,9 @@ for (const folder of commandFolders) {
     if ("data" in command && "execute" in command) {
       commands.push(command.data.toJSON());
     } else {
-      console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+      console.log(
+        `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+      );
     }
   }
 }
@@ -35,16 +37,16 @@ const rest = new REST().setToken(process.env.DISCORD_TOKEN);
 // and deploy your commands!
 (async () => {
   try {
-    console.log(
+    console.log (
       `Started refreshing ${commands.length} application (/) commands.`);
 
     // Fully refresh all commands in the guild with the current set
-    const data = await rest.put(
+    const data = await rest.put (
       Routes.applicationGuildCommands(APP_ID, guildID),
       { body: commands }
     );
 
-    console.log(
+    console.log (
       `Successfully reloaded ${data.length} application (/) commands.`);
   } catch (error) {
     // And of course, make sure you catch and log any errors!

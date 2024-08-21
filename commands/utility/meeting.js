@@ -3,7 +3,7 @@ const { SlashCommandBuilder, PermissionsBitField } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("meeting")
-    .setDescription("Plan a meeting") 
+    .setDescription("Plan a meeting")
 
     .addNumberOption(option =>
       option.setName("hour")
@@ -39,7 +39,9 @@ module.exports = {
 
     .addNumberOption(option =>
       option.setName("min")
-        .setDescription("The minutes of your meeting (0-55) in 5-minute increments")
+        .setDescription(
+      "The minutes of your meeting (0-55) in 5-minute increments"
+    )
         .setRequired(true)
         .addChoices(
           { name: "00", value: 0 },
@@ -203,7 +205,9 @@ module.exports = {
         allowedMentions: { parse: ["everyone", "users"] }
       });
 
-      interaction.channel.send(" can you join the meeting at "+ MHour + ":"+ MMin + " " + MDay + " " + MMonth + "?").then(sentMessage => {
+      interaction.channel.send(
+        " can you join the meeting at "+MHour+":"+MMin+" "+MDay+" "+MMonth+"?"
+      ).then(sentMessage => {
         sentMessage.react("✅");
         sentMessage.react("❌");
       });

@@ -5,6 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("help")
     .setDescription("Says all the commands"),
+
   async execute(interaction) {
     const commandList = client.commands.map(
       command => `/${command.data.name}`).join(", ");
