@@ -40,8 +40,8 @@ module.exports = {
     .addNumberOption(option =>
       option.setName("min")
         .setDescription(
-      "The minutes of your meeting (0-55) in 5-minute increments"
-    )
+          "The minutes of your meeting (0-55) in 5-minute increments"
+        )
         .setRequired(true)
         .addChoices(
           { name: "00", value: 0 },
@@ -186,7 +186,7 @@ module.exports = {
 
         for(i = 2; i < 11; i++) {
           if(MUsers[i] != "") {
-            Reply += "<@" + MUsers[i] + ">";
+            Reply += "<@" + MUsers[i] + "> ";
           }
         }
         return Reply;
