@@ -8,6 +8,8 @@
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/mrbobai/Overmounting?style=flat-square)](https://github.com/mrbobai/Overmounting/issues?q=is%3Aissue+is%3Aclosed)
 [![Discord Bot CI/CD](https://github.com/mrbobai/Overmounting/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/mrbobai/Overmounting/actions/workflows/node.js.yml)
 
+**Art by @Andolo-64**
+
 **Look In Issues Tab For TODO List / Feature Requests**
 
 > Overmounting is a discord bot made by the Undermounting team!<br>
