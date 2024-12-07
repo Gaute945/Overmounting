@@ -1,3 +1,8 @@
+# Ignore everything inside the .hidden folder
+.hidden/*
+# But do not ignore the folder itself
+!.hidden/
+
 .vscode
 '
 nohup.out

@@ -5,19 +5,17 @@ const fs = require("node:fs");
 const path = require("node:path");
 
 const APP_ID = process.env.APP_ID;
-const guildID = process.env.guildID;
 
 const commands = [];
-// Grab all the command folders from the commands directory you created earlier
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
 for (const folder of commandFolders) {
-  // Grab all the command files from the commands directory you created earlier
   const commandsPath = path.join(foldersPath, folder);
-  const commandFiles = fs.readdirSync(
-    commandsPath).filter(file => file.endsWith(".js"));
-  // Grab the SlashCommandBuilder#toJSON() output of each command's data
+  const commandFiles = fs
+    .readdirSync(commandsPath)
+    .filter(file => file.endsWith(".js"));
+
   for (const file of commandFiles) {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
@@ -31,25 +29,27 @@ for (const folder of commandFolders) {
   }
 }
 
-// Construct and prepare an instance of the REST module
-const rest = new REST().setToken(process.env.DISCORD_TOKEN);
+console.log("Commands to deploy:", commands);
 
-// and deploy your commands!
+const rest = new REST({ version: "10" }).setToken(process.env.DISCORD_TOKEN);
+
 (async () => {
   try {
-    console.log (
-      `Started refreshing ${commands.length} application (/) commands.`);
+    console.log(
+      `Started refreshing ${commands.length} global application (/) commands.`
+    );
 
-    // Fully refresh all commands in the guild with the current set
-    const data = await rest.put (
-      Routes.applicationGuildCommands(APP_ID, guildID),
+    const data = await rest.put(
+      Routes.applicationCommands(APP_ID),
       { body: commands }
     );
 
-    console.log (
-      `Successfully reloaded ${data.length} application (/) commands.`);
+    console.log(
+      `Successfully reloaded ${data.length} global application (/) commands.`
+    );
+    process.exit(0); // Exit successfully
   } catch (error) {
-    // And of course, make sure you catch and log any errors!
-    console.error(error);
+    console.error("Error deploying commands:", error);
+    process.exit(1); // Exit with error
   }
 })();
