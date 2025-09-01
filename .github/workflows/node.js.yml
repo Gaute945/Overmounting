@@ -25,7 +25,7 @@ jobs:
           cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install discord.js nodemon axios dotenv
+        run: npm install
 
       - name: Check for Syntax Errors
         run: node -c index.js
