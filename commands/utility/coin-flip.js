@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -19,11 +19,17 @@ module.exports = {
         return await interaction.reply("Tails Wins!");
 
       default:
-        return await interaction.reply("Value is out of valid range");
+        return await interaction.reply({
+          content: "Value is out of valid range",
+          flags: MessageFlags.Ephemeral
+      });
       }
     } catch (error) {
       console.error("Error while getting coin:", error);
-      await interaction.reply("error with function: getCoin");
+      await interaction.reply({
+        content: "error with function: getCoin",
+        flags: MessageFlags.Ephemeral
+      });
     }
   }
 };
