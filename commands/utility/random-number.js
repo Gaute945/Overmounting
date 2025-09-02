@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, MessageFlags } = require("discord.js");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,14 +18,14 @@ module.exports = {
 
   async execute(interaction) {
     try {
-      // throw new Error ("test error");
       const min = parseInt(interaction.options.getInteger("min"));
       const max = parseInt(interaction.options.getInteger("max"));
 
       if (min > max) {
-        return await interaction.reply(
-          "Please provide valid values for both min and max."
-        );
+        return await interaction.reply({
+          content: "Please provide valid values for both min and max.",
+          flags: MessageFlags.Ephemeral
+      });
       }
 
       const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -34,7 +34,10 @@ module.exports = {
       await interaction.reply(responseMessage);
     } catch (error) {
       console.error("error with random-number command", error);
-      await interaction.reply("Error while generating random number");
+      await interaction.reply({
+        content: "Error while generating random number",
+        flags: MessageFlags.Ephemeral
+      });
     }
   }
 };
