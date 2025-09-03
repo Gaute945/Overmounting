@@ -1,42 +1,44 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
-  data: new SlashCommandBuilder()
-    .setName("weather")
-    .setDescription("Current temp and wind for Stord"),
-  async execute(interaction) {
-    async function fetchWeather() {
-      try {
-        // throw new Error ("test error");
-        const axios = require("axios");
-        const response = await axios.get(
-          // cannot shorten api url
-          "https://api.open-meteo.com/v1/forecast?latitude=59.92&longitude=5.45&hourly=temperature_2m,precipitation_probability,precipitation&current_weather=true&forecast_days=1&timezone=auto"
-        );
-        return response.data;
-      } catch (error) {
-        console.error("Error while fetching weather:", error);
-        await interaction.reply("error with function: fetchWeather");
-      }
-    }
+	data: new SlashCommandBuilder()
+		.setName('weather')
+		.setDescription('shows wheater for the location in Norway that you select')
 
-    async function returnWeather() {
-      const weatherData = await fetchWeather();
-      try {
-        // throw new Error ("test error");
-        if (weatherData) {
-          const temperature =
-            Math.round(weatherData.current_weather.temperature) + 4.5;
-          const windSpeed = weatherData.current_weather.windspeed;
-          const responseText = `${temperature} °C, ${windSpeed} km/h`;
-          await interaction.reply(responseText);
-        }
-      } catch (error) {
-        console.error("Error while returning weather:", error);
-        await interaction.reply("error with function: returnWeather");
-      }
-    }
+		.addStringOption(option =>
+			option.setName("location")
+				.setDescription("where do you want to know the weather?")
+				.setAutocomplete(true)
+				.addChoices(
+					// fetch locations with autocomplete
+				)
+		)
 
-    returnWeather();
-  }
+		.addIntegerOption(option =>
+			option.setName("time")
+				.setDescription("for what time do you want to know the weather?")
+				.addChoices(
+					// any date 24 hour
+				)
+		)
+
+		.addStringOption(option =>
+			option.setName("type")
+				.setDescription("what category of wheater do you want to know?")
+				.setAutocomplete(true)
+				.addChoices(
+					// fetch the catagories from the location selected
+				)
+		),
+		// timeoffsets=default
+		// levels=default
+		// qualities=0,1,2,3,4
+
+		async autocomplete(interaction) {
+
+		},
+
+	async execute(interaction) {
+		
+  },
 };

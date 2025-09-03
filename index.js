@@ -31,6 +31,21 @@ client.once(Events.ClientReady, readyClient => {
 });
 
 client.on(Events.InteractionCreate, async interaction => {
+	// Handle autocomplete [ CHATGPT WARNING ]
+	if (interaction.isAutocomplete()) {
+		const command = client.commands.get(interaction.commandName);
+
+		if (!command || !command.autocomplete) return;
+
+		try {
+			await command.autocomplete(interaction);
+		} catch (error) {
+			console.error(`Error in autocomplete for ${interaction.commandName}:`, error);
+		}
+		return;
+	}
+
+	// Handle slash commands
 	if (!interaction.isChatInputCommand()) return;
 	const command = client.commands.get(interaction.commandName);
 
