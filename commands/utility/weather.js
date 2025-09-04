@@ -10,16 +10,15 @@ module.exports = {
 				.setDescription("where do you want to know the weather?")
 				.setAutocomplete(true)
 				.addChoices(
-					// fetch locations with autocomplete
-				)
+			)
 		)
 
 		.addIntegerOption(option =>
 			option.setName("time")
 				.setDescription("for what time do you want to know the weather?")
 				.addChoices(
-					// any date 24 hour
-				)
+				// any date 24 hour
+			)
 		)
 
 		.addStringOption(option =>
@@ -27,18 +26,35 @@ module.exports = {
 				.setDescription("what category of wheater do you want to know?")
 				.setAutocomplete(true)
 				.addChoices(
-					// fetch the catagories from the location selected
-				)
+				// fetch the catagories from the location selected
+			)
 		),
-		// timeoffsets=default
-		// levels=default
-		// qualities=0,1,2,3,4
+	// timeoffsets=default
+	// levels=default
+	// qualities=0,1,2,3,4
 
-		async autocomplete(interaction) {
+	// const response = await fetch('https://api.example.com/data');
+	// if(!response.ok) {
+	// throw new Error(`HTTP error! status: ${response.status}`);
+	// }
+	// const data = await response.json();
+	// console.log(data);
 
-		},
+
+	async autocomplete(interaction) {
+		const focusedOption = interaction.options.getFocused(true);
+		let choices;
+
+		if (focusedOption.name === 'location') {
+			console.log('location')
+		}
+
+		if (focusedOption.name === 'type') {
+			console.log('type')
+		}
+	},
 
 	async execute(interaction) {
-		
-  },
+
+	},
 };
