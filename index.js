@@ -59,11 +59,14 @@ client.on(Events.InteractionCreate, async interaction => {
 		}
 	}
 
-	timestamps.set(interaction.user.id, now);
-	setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
-
 	try {
-		await command.execute(interaction);
+		const result = await command.execute(interaction);
+
+		// opt out off cooldown
+		if (result === false) return;
+		timestamps.set(interaction.user.id, now);
+		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+
 	} catch (error) {
 		console.error(error);
 		if (interaction.replied || interaction.deferred) {
