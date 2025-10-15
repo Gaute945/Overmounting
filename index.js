@@ -62,7 +62,7 @@ client.on(Events.InteractionCreate, async interaction => {
 	try {
 		const result = await command.execute(interaction);
 
-		// opt out off cooldown
+		// opt out of cooldown
 		if (result === false) return;
 		timestamps.set(interaction.user.id, now);
 		setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);

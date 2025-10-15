@@ -1,10 +1,5 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
-function isHexcodeValid(str) {
-  const regex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-  return regex.test(str);
-}
-
 module.exports = {
   // 7 days
   cooldown: 604800,
@@ -20,6 +15,33 @@ module.exports = {
       option.setName('color')
         .setDescription('The color of the role in hexadecimal format')
         .setRequired(true)
+        .addChoices(
+          { name: 'Red', value: 'FF0000' },
+          { name: 'Green', value: '00FF00' },
+          { name: 'Blue', value: '0000FF' },
+          { name: 'Yellow', value: 'FFFF00' },
+          { name: 'Orange', value: 'FFA500' },
+          { name: 'Purple', value: '800080' },
+          { name: 'Pink', value: 'FFC0CB' },
+          { name: 'Brown', value: 'A52A2A' },
+          { name: 'Black', value: '000000' },
+          { name: 'White', value: 'FFFFFF' },
+          { name: 'Gray', value: '808080' },
+          { name: 'Cyan', value: '00FFFF' },
+          { name: 'Magenta', value: 'FF00FF' },
+          { name: 'Lime', value: '00FF00' },
+          { name: 'Teal', value: '008080' },
+          { name: 'Navy', value: '000080' },
+          { name: 'Olive', value: '808000' },
+          { name: 'Maroon', value: '800000' },
+          { name: 'Silver', value: 'C0C0C0' },
+          { name: 'Gold', value: 'FFD700' },
+          { name: 'Beige', value: 'F5F5DC' },
+          { name: 'Ivory', value: 'FFFFF0' },
+          { name: 'Lavender', value: 'E6E6FA' },
+          { name: 'Mint', value: '98FF98' },
+          { name: 'Peach', value: 'FFDAB9' }
+        )
     ),
 
   async execute(interaction) {
@@ -28,13 +50,6 @@ module.exports = {
       const name = interaction.options.getString('name');
       const color = interaction.options.getString('color');
       const botMember = await guild.members.fetch(guild.client.user.id);
-
-      // if (!isHexcodeValid(color)) {
-      //   return interaction.reply({
-      //     content: 'Please use a valid hex color like #FF0000.',
-      //     flags: MessageFlags.Ephemeral
-      //   });
-      // }
 
       const role = await guild.roles.create({
         name,
@@ -55,7 +70,7 @@ module.exports = {
       await interaction.channel.send(`<@&${role.id}>`);
     } catch (error) {
       if (error.code === 'ColorConvert') {
-        console.log("error");
+        console.error(error);
         await interaction.reply({
           content: 'Please use a valid hex color like #FF0000.',
           flags: MessageFlags.Ephemeral
