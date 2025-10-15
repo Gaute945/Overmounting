@@ -13,11 +13,21 @@ module.exports = {
 			)
 		)
 
+		// optinal
 		.addIntegerOption(option =>
 			option.setName("time")
 				.setDescription("for what time do you want to know the weather?")
 				.addChoices(
 				// any date 24 hour
+			)
+		)
+
+		// optinal
+		.addIntegerOption(option =>
+			option.setName("date")
+				.setDescription("for what date do you want to know the weather? [day month year] eks 15.09.2002")
+				.addChoices(
+				// valid date
 			)
 		)
 
