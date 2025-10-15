@@ -1,7 +1,13 @@
 const { SlashCommandBuilder, MessageFlags } = require('discord.js');
 
+function isHexcodeValid(str) {
+  const regex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+  return regex.test(str);
+}
+
 module.exports = {
-  cooldown: 5,
+  // 7 days
+  cooldown: 604800,
   data: new SlashCommandBuilder()
     .setName('role')
     .setDescription('make and assign your own roles!')
@@ -23,23 +29,18 @@ module.exports = {
       const color = interaction.options.getString('color');
       const botMember = await guild.members.fetch(guild.client.user.id);
 
-      function isHexcodeValid(str) {
-        const regex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-        return regex.test(str);
-      }
-
-      if (!isHexcodeValid(color)) {
-        return interaction.reply({
-          content: 'Please use a valid hex color like #FF0000.',
-          flags: MessageFlags.Ephemeral
-        });
-      }
+      // if (!isHexcodeValid(color)) {
+      //   return interaction.reply({
+      //     content: 'Please use a valid hex color like #FF0000.',
+      //     flags: MessageFlags.Ephemeral
+      //   });
+      // }
 
       const role = await guild.roles.create({
         name,
         color,
         hoist: true,
-        reason: 'Made by Overmounting'
+        reason: 'Made by Overmounting for ' + interaction.member.name
       });
 
       await interaction.member.roles.add(role.id);
@@ -54,26 +55,31 @@ module.exports = {
       await interaction.channel.send(`<@&${role.id}>`);
     } catch (error) {
       if (error.code === 'ColorConvert') {
-        return interaction.reply({
+        console.log("error");
+        await interaction.reply({
           content: 'Please use a valid hex color like #FF0000.',
           flags: MessageFlags.Ephemeral
         });
+        return false;
       } else if (error.message === 'Missing Permissions') {
-        return interaction.reply({
+        await interaction.reply({
           content: "I don't have the 'manage roles' permission.",
           flags: MessageFlags.Ephemeral
         });
+        return false;
       } else if (error.code === 50035) {
-        return interaction.reply({
+        await interaction.reply({
           content: 'Role name must be 100 characters or fewer.',
           flags: MessageFlags.Ephemeral
         });
+        return false;
       } else {
         console.error(error);
-        return interaction.reply({
+        await interaction.reply({
           content: 'An unknown error occurred.',
           flags: MessageFlags.Ephemeral
         });
+        return false;
       }
     }
   }
