@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "axios": "^1.12.2",
-    "discord.js": "^14.23.2",
+    "discord.js": "^14.24.0",
     "dotenv": "^17.2.3"
   }
 }
